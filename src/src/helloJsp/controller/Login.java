@@ -5,20 +5,23 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
+
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 
 /**
@@ -73,32 +76,37 @@ public class Login extends HttpServlet {
 	        WebResource service = client.resource(REST_URI);
 	        WebResource addService = service.path("rest").path(GET_USER+LOGIN+"/"+username+"&"+password);
 
-	        out.println(getOutputAsXML(addService));
 	        
 	        //parsing json
+	        out.println("0");
+	        JSONTokener jsonTokener = new JSONTokener(getOutputAsXML(addService));
+	        out.println("haha");
+	        JSONObject jsonObject = new JSONObject(jsonTokener);
+	        out.println("1");
+	        JSONObject content = (JSONObject) jsonObject.get("content");
+	        Integer status = (Integer) jsonObject.get("status");
 	        
+	        if(status == 200){
+		        Integer id_pengguna = Integer.parseInt((content.get("id_pengguna").toString()));
+		        String nama_pengguna = (String) content.get("nama_pengguna");
 	        
-	        
-	        //desc = getOutputAsXML(addService);
-			
-			/*ResultSet rs = statement.executeQuery("select * from pengguna where username ='"+username+"'and password ='"+password+"'"); 
-			
-			if(rs.next()){
-				session.setAttribute("user", username);
+		        session.setAttribute("user", username);
 				//setting session to expiry in 30 mins
 				session.setMaxInactiveInterval(1800);
 				Cookie userName = new Cookie("user", username);
 				userName.setMaxAge(30*60);
 				response.addCookie(userName);
 				response.sendRedirect("LoginSuccessful.jsp");
-			}else{
-				RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
+	        } else{
+	        	RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
 				out.println("<font color=red>Either user name or password is wrong.</font>");
 				rd.include(request, response);
-			}*/
+	        }
 		}catch(Exception e){
 			out.println("Ch si");
 			e.printStackTrace();
 		}
 	}
+	
+	
 }

@@ -52,7 +52,7 @@ public class GetUser {
 						+ "} }";
 			} else {
 				return "{"
-						+ "\"status\": 200"
+						+ "\"status\": 204"
 						+ "\"detail\": \"OK\""
 						+ ",\"content\":\"null\""
 						+ "}";
