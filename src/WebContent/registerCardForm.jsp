@@ -57,6 +57,7 @@
 					document.getElementById("cek").innerHTML="<img src='public/img/mini-loader.gif'> Harap tunggu! kami sedang memvalidasi kartu kredit Anda...";
 				}
 			}
+			//xmlhttp.open("GET", "CardValidation");
 			xmlhttp.open("GET","CardValidation?cardnumber="+cardnum+"&names="+nama+"&expired="+expired,true);
 			xmlhttp.send();
 		}

@@ -3,25 +3,33 @@ package helloJsp.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.Statement;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/Login")
+
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	static final String REST_URI = "http://localhost:8080/Chintalian";
+    static final String GET_USER = "/GetUser";
+    static final String LOGIN = "/login";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -38,6 +46,14 @@ public class Login extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 
+	private static String getResponse(WebResource service) {
+        return service.accept(MediaType.TEXT_XML).get(ClientResponse.class).toString();
+    }
+ 
+    private static String getOutputAsXML(WebResource service) {
+        return service.accept(MediaType.TEXT_XML).get(String.class);
+    }
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -51,7 +67,22 @@ public class Login extends HttpServlet {
 		PrintWriter out= response.getWriter();
 		try{
 			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("select * from pengguna where username ='"+username+"'and password ='"+password+"'"); 
+		    
+			ClientConfig config = new DefaultClientConfig();
+	        Client client = Client.create(config);
+	        WebResource service = client.resource(REST_URI);
+	        WebResource addService = service.path("rest").path(GET_USER+LOGIN+"/"+username+"&"+password);
+
+	        out.println(getOutputAsXML(addService));
+	        
+	        //parsing json
+	        
+	        
+	        
+	        //desc = getOutputAsXML(addService);
+			
+			/*ResultSet rs = statement.executeQuery("select * from pengguna where username ='"+username+"'and password ='"+password+"'"); 
+			
 			if(rs.next()){
 				session.setAttribute("user", username);
 				//setting session to expiry in 30 mins
@@ -64,7 +95,7 @@ public class Login extends HttpServlet {
 				RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
 				out.println("<font color=red>Either user name or password is wrong.</font>");
 				rd.include(request, response);
-			}
+			}*/
 		}catch(Exception e){
 			out.println("Ch si");
 			e.printStackTrace();

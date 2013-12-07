@@ -18,15 +18,34 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.MediaType;
 
-@WebServlet("/Cart")
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+
+
 public class Cart extends HttpServlet {
 
+	static final String REST_URI = "http://localhost:8080/Chintalian";
+    static final String INCH_TO_FEET = "/Genta/InchToFeet/";
+    static final String FEET_TO_INCH = "/Genta/FeetToInch/";
+	
 	public Cart() {
 		// TODO Auto-generated constructor stub
 		super();
 	}
 
+	private static String getResponse(WebResource service) {
+        return service.accept(MediaType.TEXT_XML).get(ClientResponse.class).toString();
+    }
+ 
+    private static String getOutputAsXML(WebResource service) {
+        return service.accept(MediaType.TEXT_XML).get(String.class);
+    }
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -46,6 +65,9 @@ public class Cart extends HttpServlet {
 			stock = Integer.parseInt(request.getParameter("stock"));
 			price = Integer.parseInt(request.getParameter("price"));
 
+			
+
+			
 			if (stock < quantity) {
 				// fail
 				out.println(-1);

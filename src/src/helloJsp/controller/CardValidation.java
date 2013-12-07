@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class CardValidation
  */
-@WebServlet("/CardValidation")
+
 public class CardValidation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

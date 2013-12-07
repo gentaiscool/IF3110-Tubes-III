@@ -107,7 +107,7 @@
 			}
 		}
 	} else {
-		//response.sendRedirect("Favorit");
+		response.sendRedirect("Favorit");
 	}
 	%>
 	</div>
@@ -126,7 +126,8 @@
 							break;
 						}
 					}
-					out.println("(" + (i + 1) + ") " + sc.getItems().get(i).getQuantity() + "x " + TabelBarang.get(temp).getNama_inventori()+ " Rp. "+sc.getItems().get(i).getQuantity()*sc.getItems().get(i).getPrice() +",- <button>delete</button><br/>");
+					if(temp>=0)
+						out.println("(" + (i + 1) + ") " + sc.getItems().get(i).getQuantity() + "x " + TabelBarang.get(temp).getNama_inventori()+ " Rp. "+sc.getItems().get(i).getQuantity()*sc.getItems().get(i).getPrice() +",- <button>delete</button><br/>");
 					
 					if(sc.getItems().get(i).getDescription().equals("")){
 						out.println("No special order<br/>");

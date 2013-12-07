@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class genta
  */
-@WebServlet("/genta")
+
 public class genta extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class Category
  */
-@WebServlet("/Category")
+
 public class Category extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
