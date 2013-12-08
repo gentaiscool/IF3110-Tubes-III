@@ -44,7 +44,8 @@ public class Validasi extends HttpServlet {
 		int type =  Integer.parseInt(request.getParameter("num"));
 		pass =request.getParameter("pass");
 		HttpSession session = request.getSession();
-		if(session.getAttribute("user") == null){
+
+		if(session.getAttribute("user") != null){
 			DbConnector dbconnector = new DbConnector();
 			Connection connection = dbconnector.mySqlConnection();
 			try{
@@ -105,7 +106,7 @@ public class Validasi extends HttpServlet {
 					}
 					query = "SELECT * FROM pengguna WHERE email = '"+data+"'";
 					ResultSet rss = statement.executeQuery(query);
-					regex = "[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})";
+					regex = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
 					if (data.matches(regex) && !data.equals(pass)&&!rss.next()) {
 						out.print(0);
 					} else { 

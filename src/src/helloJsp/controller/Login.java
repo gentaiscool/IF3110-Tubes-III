@@ -75,7 +75,6 @@ public class Login extends HttpServlet {
 	        Client client = Client.create(config);
 	        WebResource service = client.resource(REST_URI);
 	        WebResource addService = service.path("rest").path(GET_USER+LOGIN+"/"+username+"&"+password);
-
 	        
 	        //parsing json
 	        out.println("0");
@@ -94,7 +93,7 @@ public class Login extends HttpServlet {
 				//setting session to expiry in 30 mins
 				session.setMaxInactiveInterval(1800);
 				Cookie userName = new Cookie("user", username);
-				userName.setMaxAge(30*60);
+				//userName.setMaxAge(30*60);
 				response.addCookie(userName);
 				response.sendRedirect("LoginSuccessful.jsp");
 	        } else{
@@ -107,6 +106,4 @@ public class Login extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
-	
 }

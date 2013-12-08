@@ -7,20 +7,26 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.MultivaluedMap;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 /**
  * Servlet implementation class UpdateProfile
  */
 
 public class UpdateProfile extends HttpServlet {
+	static final String REST_URI = "http://localhost:8080/Chintalian";
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -48,6 +54,15 @@ public class UpdateProfile extends HttpServlet {
 		dataregister[7] = request.getParameter("provinsi2");
 		dataregister[8] = request.getParameter("kota2");
 		dataregister[9] = request.getParameter("kodepos2");
+		
+		ClientConfig config = new DefaultClientConfig();
+        Client client = Client.create(config);
+        WebResource webResource = client.resource(REST_URI);
+        MultivaluedMap queryParams = new MultivaluedMapImpl();
+        queryParams.add("param1", "val1");
+        queryParams.add("param2", "val2");
+        ClientResponse clientResponse = webResource.queryParams(queryParams).put(ClientResponse.class, "foo:bar");
+		
 		DbConnector dbconnector = new DbConnector();
 		Connection connection = dbconnector.mySqlConnection();
 		PrintWriter out = response.getWriter();
