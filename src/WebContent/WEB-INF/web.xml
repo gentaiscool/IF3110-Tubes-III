@@ -56,6 +56,10 @@
     <servlet-name>CardValidation</servlet-name>
     <servlet-class>helloJsp.controller.CardValidation</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>UpdateUser</servlet-name>
+    <servlet-class>helloJsp.REST.UpdateUser</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
     <url-pattern>/Login</url-pattern>
@@ -111,6 +115,10 @@
   <servlet-mapping>
     <servlet-name>Validasi</servlet-name>
     <url-pattern>/Validasi</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdateUser</servlet-name>
+    <url-pattern>/UpdateUser</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>Jersey REST Service</servlet-name>

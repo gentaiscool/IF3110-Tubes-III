@@ -1,25 +1,22 @@
 package helloJsp.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.core.MultivaluedMap;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 /**
  * Servlet implementation class UpdateProfile
@@ -45,64 +42,52 @@ public class UpdateProfile extends HttpServlet {
 		HttpSession session = request.getSession();
 		String[] dataregister = new String[10];
 		dataregister[0] = request.getParameter("nama2");
+		dataregister[0] = dataregister[0].replace(" ", "$");
 		dataregister[1] = "0";
 		dataregister[2] = request.getParameter("uname");
+		dataregister[2] = dataregister[2].replace(" ", "$");
 		dataregister[3] = request.getParameter("pwd2");
+		dataregister[3] = dataregister[3].replace(" ", "$");
 		dataregister[4] = request.getParameter("email2");
+		dataregister[4] = dataregister[4].replace(" ", "$");
 		dataregister[5] = request.getParameter("nohp2");
+		dataregister[5] = dataregister[5].replace(" ", "$");
 		dataregister[6] = request.getParameter("alamat2");
+		dataregister[6] = dataregister[6].replace(" ", "$");
 		dataregister[7] = request.getParameter("provinsi2");
+		dataregister[7] = dataregister[7].replace(" ", "$");
 		dataregister[8] = request.getParameter("kota2");
+		dataregister[8] = dataregister[8].replace(" ", "$");
 		dataregister[9] = request.getParameter("kodepos2");
+		dataregister[9] = dataregister[9].replace(" ", "$");
 		
-		ClientConfig config = new DefaultClientConfig();
-        Client client = Client.create(config);
-        WebResource webResource = client.resource(REST_URI);
-        MultivaluedMap queryParams = new MultivaluedMapImpl();
-        queryParams.add("param1", "val1");
-        queryParams.add("param2", "val2");
-        ClientResponse clientResponse = webResource.queryParams(queryParams).put(ClientResponse.class, "foo:bar");
-		
-		DbConnector dbconnector = new DbConnector();
-		Connection connection = dbconnector.mySqlConnection();
-		PrintWriter out = response.getWriter();
-		try{
-			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("select * from pengguna where username ='"+dataregister[2]+"'");
-			rs.next();
-			ArrayList<Integer> change = new ArrayList<Integer>();
-			int first=0;
-			String query="UPDATE pengguna SET ";
-			if(!rs.getString("nama_pengguna").equals(dataregister[0])) {if(first==0)first++;else query+=",";query+="nama_pengguna='"+dataregister[0]+"'";}else change.add(0);
-			if(!rs.getString("password").equals(dataregister[3])) {if(first==0)first++;else query+=",";query+="password='"+dataregister[3]+"'";}else change.add(3);
-			if(!rs.getString("email").equals(dataregister[4])) {if(first==0)first++;else query+=",";query+="email='"+dataregister[4]+"'";}else change.add(4);
-			if(!rs.getString("nomor_hp").equals(dataregister[5])) {if(first==0)first++;else query+=",";query+="nomor_hp='"+dataregister[5]+"'";}else change.add(5);
-			if(!rs.getString("alamat").equals(dataregister[6])) {if(first==0)first++;else query+=",";query+="alamat='"+dataregister[6]+"'";}else change.add(6);
-			if(!rs.getString("provinsi").equals(dataregister[7])){if(first==0)first++;else query+=",";query+="provinsi='"+dataregister[7]+"'";}else change.add(7);
-			if(!rs.getString("kota_kabupaten").equals(dataregister[8])){if(first==0)first++;else query+=",";query+="kota_kabupaten='"+dataregister[8]+"'";}else change.add(8);
-			if(!rs.getString("kode_pos").equals(dataregister[9])){if(first==0)first++;else query+=",";query+="kode_pos='"+dataregister[9]+"'";}else change.add(9);
-			query+=" WHERE username='"+dataregister[2]+"'";
-			statement.executeUpdate(query);
-			//rs = statement.executeQuery("select * from pengguna where username ='"+dataregister[2]+"'");
-			//rs.next();
-			String prints="";
-			for(int d : change){
-				switch(d){
-				case 0: prints+="nama_pengguna\n";break;
-				case 3: prints+="password\n";break;
-				case 4: prints+="email\n";break;
-				case 5: prints+="nomor_hp\n";break;
-				case 6: prints+="alamat\n";break;
-				case 7: prints+="provinsi\n";break;
-				case 8: prints+="kota_kabupaten\n";break;
-				case 9: prints+="kodepos\n";break;
-				}
-			}
-			//String result = rs.getString("username")+rs.getString("nama_pengguna")+rs.getString("password")+rs.getString("email")+rs.getString("nomor_hp")+rs.getString("alamat")+rs.getString("provinsi")+rs.getString("kota_kabupaten")+rs.getString("kode_pos");
-			out.print(prints);
-		}catch(Exception e){
-			e.printStackTrace();
+		HttpClient client = new DefaultHttpClient();
+		HttpGet request2 = new HttpGet("http://127.0.0.1:8080/Chintalian/UpdateUser?nama2="+dataregister[0]+"&uname="+dataregister[2]
+		+"&pwd2="+dataregister[3]+"&email2="+dataregister[4]+"&nohp2="+dataregister[5]+"&alamat2="+dataregister[6]
+				+"&provinsi2="+dataregister[7]+"&kota2="+dataregister[8]+"&kodepos2="+dataregister[9]);
+		HttpResponse response2 = client.execute(request2);
+
+		// Get the response
+		BufferedReader rd = new BufferedReader
+		  (new InputStreamReader(response2.getEntity().getContent()));
+		    
+		String line = "";
+		StringBuffer textView = new StringBuffer();
+		while ((line = rd.readLine()) != null) {
+		  textView.append(line);
 		}
+		
+		//parsing json
+        JSONTokener jsonTokener = new JSONTokener(textView.toString());
+        JSONObject jsonObject = new JSONObject(jsonTokener);
+        String konten = jsonObject.getString("content");
+        Integer status = (Integer) jsonObject.get("status");
+        PrintWriter out = response.getWriter();
+        if(status == 200){
+	        out.print(konten);
+        } else{
+        	out.print("");
+        }
 	}
 
 	/**

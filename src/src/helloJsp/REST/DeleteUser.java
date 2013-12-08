@@ -14,11 +14,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class UpdateUser extends HttpServlet{
+public class DeleteUser extends HttpServlet{
 
 	//UpdateBarang
 	
-	public UpdateUser() {
+	public DeleteUser() {
 		// TODO Auto-generated constructor stub
 	}
 	

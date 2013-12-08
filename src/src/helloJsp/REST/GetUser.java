@@ -1,9 +1,5 @@
 package helloJsp.REST;
 
-/**
- * @author Arpit Mandliya
- */
-
 import helloJsp.controller.DbConnector;
 
 import java.sql.Connection;
@@ -136,18 +132,6 @@ public class GetUser {
 			+ "}";
 		}
 		
-	}
-
-
-	@Path("/FeetToInch/{f}")
-	@GET
-	@Produces(MediaType.TEXT_XML)
-	public String convertFeetToInch(@PathParam("f") int f) {
-		int inch = 0;
-		int feet = f;
-		inch = 12 * feet;
-
-		return "<FeetToInchService>" + "<Feet>" + feet + "</Feet>" + "<Inch>" + inch + "</Inch>" + "</FeetToInchService>";
 	}
 
 }
