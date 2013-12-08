@@ -7,16 +7,21 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.MediaType;
+
+import org.json.JSONObject;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 /**
  * Servlet implementation class Category
@@ -24,13 +29,23 @@ import javax.servlet.http.HttpSession;
 
 public class EditBarang extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    static final String REST_URI = "http://localhost:8080/Chintalian";
+    static final String EDIT_BARANG = "/EditBarang";
+	static final String GET_BARANG_ID = "/GetBarangId";
     /**
      * @see HttpServlet#HttpServlet()
      */
     public EditBarang() {
         super();
         // TODO Auto-generated constructor stub
+    }
+	
+	private static String getResponse(WebResource service) {
+        return service.accept(MediaType.TEXT_XML).get(ClientResponse.class).toString();
+    }
+ 
+    private static String getOutputAsXML(WebResource service) {
+        return service.accept(MediaType.TEXT_XML).get(String.class);
     }
 
 	/**
@@ -47,18 +62,37 @@ public class EditBarang extends HttpServlet {
 		out.println(idBarang);
 		try{
 			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("select * from inventori where id_inventori ="+idBarang+";");
-			if(rs.next()){
+		
+			ClientConfig config = new DefaultClientConfig();
+			Client client = Client.create(config);
+			WebResource service = client.resource(REST_URI);
+			WebResource addService1 = service.path("rest").path(EDIT_BARANG+GET_BARANG_ID+"/"+idBarang);
+			out.println(getOutputAsXML(addService1));
+			
+			//PARSING
+			String JSONHasil = getOutputAsXML(addService1);
+			JSONObject obj = new JSONObject(JSONHasil);
+			int hasil = obj.getInt("hasil");
+			
+			
+			int id_inventori = obj.getInt("id_inventori");
+			int id_kategori = obj.getInt("id_kategori");
+			String nama_inventori = obj.getString("nama_inventori");
+			int jumlah = obj.getInt("jumlah");
+			String gambar = obj.getString("gambar");
+			String description = obj.getString("description");
+			int harga = obj.getInt("harga");
+			
+			if(hasil == 1){
+				out.println("OKEEE");
 				ModelInventori barang = new ModelInventori();
-				barang.setId_inventori(rs.getInt("id_inventori"));
-				barang.setId_kategori(rs.getInt("id_kategori"));
-				barang.setNama_inventori(rs.getString("nama_inventori"));
-				barang.setJumlah(rs.getInt("jumlah"));
-				barang.setGambar(rs.getString("gambar"));
-				barang.setDescription(rs.getString("description"));
-				barang.setHarga(rs.getInt("harga"));
-				//TabelBarang.add(barang);
-				out.println("he");
+				barang.setId_inventori(id_inventori);
+				barang.setId_kategori(id_kategori);
+				barang.setNama_inventori(nama_inventori);
+				barang.setJumlah(jumlah);
+				barang.setGambar(gambar);
+				barang.setDescription(description);
+				barang.setHarga(harga);
 				
 				session.setAttribute("barang", barang);
 				//setting session to expiry in 30 mins
@@ -86,18 +120,34 @@ public class EditBarang extends HttpServlet {
 		out.println(idBarang);
 		try{
 			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("select * from inventori where id_inventori ="+idBarang+";");
-			if(rs.next()){
+			
+			ClientConfig config = new DefaultClientConfig();
+			Client client = Client.create(config);
+			WebResource service = client.resource(REST_URI);
+			WebResource addService1 = service.path("rest").path(EDIT_BARANG+GET_BARANG_ID+"/"+idBarang);
+			
+			//PARSING
+			String JSONHasil = getOutputAsXML(addService1);
+			JSONObject obj = new JSONObject(JSONHasil);
+			int hasil = obj.getInt("hasil");
+			
+			int id_inventori = obj.getInt("id_inventori");
+			int id_kategori = obj.getInt("id_kategori");
+			String nama_inventori = obj.getString("nama_inventori");
+			int jumlah = obj.getInt("jumlah");
+			String gambar = obj.getString("gambar");
+			String description = obj.getString("description");
+			int harga = obj.getInt("harga");
+			
+			if(hasil == 1){
 				ModelInventori barang = new ModelInventori();
-				barang.setId_inventori(rs.getInt("id_inventori"));
-				barang.setId_kategori(rs.getInt("id_kategori"));
-				barang.setNama_inventori(rs.getString("nama_inventori"));
-				barang.setJumlah(rs.getInt("jumlah"));
-				barang.setGambar(rs.getString("gambar"));
-				barang.setDescription(rs.getString("description"));
-				barang.setHarga(rs.getInt("harga"));
-				//TabelBarang.add(barang);
-				out.println("he");
+				barang.setId_inventori(id_inventori);
+				barang.setId_kategori(id_kategori);
+				barang.setNama_inventori(nama_inventori);
+				barang.setJumlah(jumlah);
+				barang.setGambar(gambar);
+				barang.setDescription(description);
+				barang.setHarga(harga);
 				
 				session.setAttribute("barang", barang);
 				response.sendRedirect("editBarang.jsp?idBarang="+idBarang);

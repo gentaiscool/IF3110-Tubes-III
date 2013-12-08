@@ -8,18 +8,38 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class DeleteUser extends HttpServlet{
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+public class UpdateCreditCard extends HttpServlet{
 
 	//UpdateBarang
 	
-	public DeleteUser() {
+	public UpdateCreditCard() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		Integer quantity =  Integer.parseInt(request.getParameter("quantity"));
+		Integer idItem =  Integer.parseInt(request.getParameter("idItem"));
+		String desc =  request.getParameter("desc");
+		Integer stock =  Integer.parseInt(request.getParameter("stock"));
+		Integer price =  Integer.parseInt(request.getParameter("price"));
+		
+		HttpClient client = new DefaultHttpClient();
+		List<NameValuePair> list = new ArrayList<NameValuePair>();
+		list.add(new BasicNameValuePair("", ""));
 	}
 	
 	@Override
@@ -50,6 +70,18 @@ public class DeleteUser extends HttpServlet{
 		dataregister[7] = dataregister[7].replace("$", " ");
 		dataregister[8] = dataregister[8].replace("$", " ");
 		dataregister[9] = dataregister[9].replace("$", " ");
+		
+		//Integer quantity =  request.getParameter("quantity");
+		
+		//quantity = Integer.parseInt(request.getParameter("quantity"));
+		//idItem = Integer.parseInt(request.getParameter("id"));
+		//desc = request.getParameter("desc");
+		//stock = Integer.parseInt(request.getParameter("stock"));
+		//price = Integer.parseInt(request.getParameter("price"));
+		
+		HttpClient client = new DefaultHttpClient();
+		List<NameValuePair> list = new ArrayList<NameValuePair>();
+		list.add(new BasicNameValuePair("", ""));
 		
 		try{
 			Statement statement = connection.createStatement();

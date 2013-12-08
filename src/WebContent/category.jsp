@@ -65,7 +65,7 @@
 		<% 
 		if(session.getAttribute("user") != null){
 			if (session.getAttribute("user").equals("admin")) {
-				out.println("<button onClick=\"location.href='updateBarang?type=2'\">add NEW item</button>");
+				out.println("<button onClick=\"location.href='UpdateBarang?type=2'\">add NEW item</button>");
 				}
 		}
 		%>

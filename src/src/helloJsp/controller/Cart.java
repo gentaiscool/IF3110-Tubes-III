@@ -64,9 +64,6 @@ public class Cart extends HttpServlet {
 			desc = request.getParameter("desc");
 			stock = Integer.parseInt(request.getParameter("stock"));
 			price = Integer.parseInt(request.getParameter("price"));
-
-			
-
 			
 			if (stock < quantity) {
 				// fail
