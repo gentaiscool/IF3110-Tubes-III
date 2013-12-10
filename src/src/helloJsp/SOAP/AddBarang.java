@@ -17,12 +17,12 @@ public class AddBarang {
 			statement.executeUpdate("insert into inventori (id_kategori, nama_inventori, gambar, harga, jumlah,"
 					+ "description, count) values ("+kategori+", '" + nama + "', '" + gambar + "', " + harga 
 					+ ", " + jumlah + ", '" + description + "', 0);");
-			
+			return "1";
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "0";
 		}
-		return "s";
 	}
 
 }

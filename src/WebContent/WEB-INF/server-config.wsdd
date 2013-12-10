@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -33,11 +33,11 @@
    <ns2:parameter qname="ns1:harga" type="xsd:int"/>
   </ns2:operation>
   <ns1:parameter name="allowedMethods" value="createBarang"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="AddBarang"/>
-  <ns1:parameter name="className" value="helloJsp.SOAP.AddBarang"/>
-  <ns1:parameter name="wsdlServicePort" value="AddBarang"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="schemaQualified" value="http://SOAP.helloJsp"/>
+  <ns1:parameter name="wsdlServicePort" value="AddBarang"/>
+  <ns1:parameter name="className" value="helloJsp.SOAP.AddBarang"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://SOAP.helloJsp"/>
   <ns1:parameter name="wsdlServiceElement" value="AddBarangService"/>
  </ns1:service>
@@ -54,11 +54,11 @@
    <ns1:parameter qname="ns2:kode_pos" type="xsd:string"/>
   </ns1:operation>
   <ns1:parameter name="allowedMethods" value="createUser"/>
-  <ns1:parameter name="wsdlPortType" value="AddUser"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="schemaQualified" value="http://SOAP.helloJsp"/>
-  <ns1:parameter name="wsdlServicePort" value="AddUser"/>
+  <ns1:parameter name="wsdlPortType" value="AddUser"/>
   <ns1:parameter name="className" value="helloJsp.SOAP.AddUser"/>
+  <ns1:parameter name="wsdlServicePort" value="AddUser"/>
+  <ns1:parameter name="schemaQualified" value="http://SOAP.helloJsp"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://SOAP.helloJsp"/>
   <ns1:parameter name="wsdlServiceElement" value="AddUserService"/>
  </ns1:service>
@@ -71,6 +71,19 @@
  <ns1:service name="Version" provider="java:RPC">
   <ns1:parameter name="allowedMethods" value="getVersion"/>
   <ns1:parameter name="className" value="org.apache.axis.Version"/>
+ </ns1:service>
+ <ns1:service name="CekBarang" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="cekBarang" qname="ns3:cekBarang" returnQName="ns3:cekBarangReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://SOAP.helloJsp" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns3:nama" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="cekBarang"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="CekBarang"/>
+  <ns1:parameter name="className" value="helloJsp.SOAP.CekBarang"/>
+  <ns1:parameter name="wsdlServicePort" value="CekBarang"/>
+  <ns1:parameter name="schemaQualified" value="http://SOAP.helloJsp"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://SOAP.helloJsp"/>
+  <ns1:parameter name="wsdlServiceElement" value="CekBarangService"/>
  </ns1:service>
  <ns1:transport name="http">
   <ns1:requestFlow>

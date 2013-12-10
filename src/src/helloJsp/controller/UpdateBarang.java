@@ -2,6 +2,7 @@ package helloJsp.controller;
 
 import helloJsp.model.ModelInventori;
 import helloJsp.SOAP.AddBarang;
+import helloJsp.AddBarang.AddBarangProxy;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -171,12 +172,10 @@ public class UpdateBarang extends HttpServlet {
 				if(hasil4 == 1)
 					response.sendRedirect("index.jsp?msg='Delete sukses!'");
 			} else if (type == 2) { // add ???		
-				AddBarang add = new AddBarang();
-				add.createBarang(idBarang, kategori, nama, jumlah, gambar, description, harga);
-				/*Statement statement2 = connection.createStatement();
+				Statement statement2 = connection.createStatement();
 				if (ok) {
 					if (request.getParameter("kategori") != null){
-						int kategori = Integer.parseInt(request.getParameter("kategori"));
+						kategori = Integer.parseInt(request.getParameter("kategori"));
 						if (kategori > 0 && kategori <= 5){
 							WebResource addService5 = service.path("rest").path(UPDATE_BARANG+GET_BARANG+"/"+nama);
 							out.println(getOutputAsXML(addService5));
@@ -190,16 +189,15 @@ public class UpdateBarang extends HttpServlet {
 								// nama udah ada
 								response.sendRedirect("newBarang.jsp?msg='Nama sudah digunakan'");
 							} else {
-								WebResource addService6 = service.path("rest").path(UPDATE_BARANG+ADD_BARANG+"/"+kategori+"&"+nama+"&"+gambar+"&"+harga+"&"+ jumlah+"&"+description+"&"+0);
-								//out.println(getOutputAsXML(addService6));
-								
-								//PARSING
-								String JSONHasil6 = getOutputAsXML(addService6);
-								JSONObject obj6 = new JSONObject(JSONHasil6);
-								int hasil6 = obj6.getInt("hasil");
+								AddBarangProxy a = new AddBarangProxy();
+								String result = a.createBarang(idBarang, kategori, nama, jumlah, gambar, description, harga);
 							
-								if (hasil6 == 1)
+								if (result.equals("1")){
 									response.sendRedirect("index.jsp?msg='Update sukses!'");
+								}
+								else {
+									response.sendRedirect("newBarang.jsp?msg='Update gagal!'");
+								}
 							}
 						} else {
 							response.sendRedirect("newBarang.jsp?msg='Kategori tidak terdaftar'");
@@ -209,7 +207,7 @@ public class UpdateBarang extends HttpServlet {
 					}
 				} else {
 					response.sendRedirect("newBarang.jsp?msg='Masukan salah'");
-				}*/
+				}
 			}
 		} catch (Exception e) {
 			out.println("Ch si");
