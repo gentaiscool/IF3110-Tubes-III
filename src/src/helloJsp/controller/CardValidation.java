@@ -51,6 +51,7 @@ public class CardValidation extends HttpServlet {
 		boolean bcardnum = false, bname = false;
 		cardnum = Integer.parseInt(request.getParameter("cardnumber").toString());
 		names = request.getParameter("names");
+		names = names.replace(' ', '*');
 		expired = request.getParameter("expired");
 
 		HttpSession session = request.getSession();

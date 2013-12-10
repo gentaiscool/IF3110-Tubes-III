@@ -98,7 +98,7 @@ public class Registrasi extends HttpServlet {
 			} else {
 				out.println("lol2");
 				RequestDispatcher rd = getServletContext()
-						.getRequestDispatcher("/login.html");
+						.getRequestDispatcher("/login.jsp");
 				out.println("<font color=red>Proses registrasi gagal</font>");
 				rd.include(request, response);
 			}

@@ -12,11 +12,16 @@ public class AddUser {
 		Connection connection = dbconnector.mySqlConnection();
 		Statement statement;
 		try {
+			System.out.println("insert into pengguna (nama_pengguna, role, username, password, email, nomor_hp,"
+					+ "alamat, provinsi, kota_kabupaten, kode_pos, total_transaksi, expired_date, nama_on_card,nomor_credit_card) values ('"
+					+ nama_pengguna + "', 0, '" + username + "', '" + password + "', '" + email + "', '" 
+					+ nomor_hp + "', '" + alamat + "', '" + provinsi + "', '" + kota_kabupaten + "', '" + kode_pos + "', 0, '00-00-00', 'dummy','');");
 			statement = connection.createStatement();
 			statement.executeUpdate("insert into pengguna (nama_pengguna, role, username, password, email, nomor_hp,"
-					+ "alamat, provinsi, kota_kabupaten, kode_pos, total_transaksi, expired_date, nama_on_card) values ('"
+					+ "alamat, provinsi, kota_kabupaten, kode_pos, total_transaksi, expired_date, nama_on_card,nomor_credit_card) values ('"
 					+ nama_pengguna + "', 0, '" + username + "', '" + password + "', '" + email + "', '" 
-					+ nomor_hp + "', '" + alamat + "', '" + provinsi + "', '" + kota_kabupaten + "', '" + kode_pos + "', 0, '00-00-00', 'dummy');");
+					+ nomor_hp + "', '" + alamat + "', '" + provinsi + "', '" + kota_kabupaten + "', '" + kode_pos + "', 0, '00-00-00', 'dummy','');");
+			
 			return "1";
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

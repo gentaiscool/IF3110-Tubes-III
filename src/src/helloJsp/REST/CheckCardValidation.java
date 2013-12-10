@@ -39,6 +39,7 @@ public class CheckCardValidation extends HttpServlet {
 		int cardnum = Integer.parseInt(request.getParameter("cardnum").toString());
 		String user = request.getParameter("user");
 		String query, regex, names = request.getParameter("names");
+		names = names.replace('*', ' ');
 		String expired = request.getParameter("expired");
 		
 		DbConnector dbconnector = new DbConnector();
