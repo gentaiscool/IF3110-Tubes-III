@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from AddUserService WSDL service -->
+
+  <service name="AddUser" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://SOAP.helloJsp"/>
+      <parameter name="wsdlServiceElement" value="AddUserService"/>
+      <parameter name="schemaQualified" value="http://SOAP.helloJsp"/>
+      <parameter name="wsdlServicePort" value="AddUser"/>
+      <parameter name="className" value="helloJsp.SOAP.AddUser"/>
+      <parameter name="wsdlPortType" value="AddUser"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://SOAP.helloJsp" xmlns:retNS="http://SOAP.helloJsp" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="createUser" qname="operNS:createUser" returnQName="retNS:createUserReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://SOAP.helloJsp" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nama_pengguna" type="tns:string"/>
+        <parameter xmlns:pns="http://SOAP.helloJsp" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+        <parameter xmlns:pns="http://SOAP.helloJsp" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:password" type="tns:string"/>
+        <parameter xmlns:pns="http://SOAP.helloJsp" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
+        <parameter xmlns:pns="http://SOAP.helloJsp" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nomor_hp" type="tns:string"/>
+        <parameter xmlns:pns="http://SOAP.helloJsp" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:alamat" type="tns:string"/>
+        <parameter xmlns:pns="http://SOAP.helloJsp" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:provinsi" type="tns:string"/>
+        <parameter xmlns:pns="http://SOAP.helloJsp" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:kota_kabupaten" type="tns:string"/>
+        <parameter xmlns:pns="http://SOAP.helloJsp" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:kode_pos" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="createUser"/>
+
+  </service>
+</deployment>

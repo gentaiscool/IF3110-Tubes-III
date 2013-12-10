@@ -1,6 +1,7 @@
 package helloJsp.controller;
 
 import helloJsp.model.ModelInventori;
+import helloJsp.SOAP.AddBarang;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -63,8 +64,13 @@ public class UpdateBarang extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		boolean ok = true;
-		int idBarang = 0, type = 0, harga = 0, jumlah = 0;
+		int idBarang = 0, type = 0, harga = 0, jumlah = 0, kategori = 0;
 		String nama = null, gambar = null, description = null;
+		
+		if (request.getParameter("kategori") != null)
+			kategori = Integer.parseInt(request.getParameter("kategori"));
+		else
+			ok = false;
 
 		if (request.getParameter("idBarang") != null)
 			idBarang = Integer.parseInt(request.getParameter("idBarang"));
@@ -102,8 +108,8 @@ public class UpdateBarang extends HttpServlet {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		ModelInventori barang = (ModelInventori) session.getAttribute("barang");
-		out.print("nama1:"+barang.getNama_inventori());
-		out.print("nama2"+nama);
+		//out.print("nama1:"+barang.getNama_inventori());
+		//out.print("nama2"+nama);
 		// ArrayList<ModelInventori> TabelBarang = new
 		// ArrayList<ModelInventori>();
 		try {
@@ -165,7 +171,9 @@ public class UpdateBarang extends HttpServlet {
 				if(hasil4 == 1)
 					response.sendRedirect("index.jsp?msg='Delete sukses!'");
 			} else if (type == 2) { // add ???		
-				Statement statement2 = connection.createStatement();
+				AddBarang add = new AddBarang();
+				add.createBarang(idBarang, kategori, nama, jumlah, gambar, description, harga);
+				/*Statement statement2 = connection.createStatement();
 				if (ok) {
 					if (request.getParameter("kategori") != null){
 						int kategori = Integer.parseInt(request.getParameter("kategori"));
@@ -201,7 +209,7 @@ public class UpdateBarang extends HttpServlet {
 					}
 				} else {
 					response.sendRedirect("newBarang.jsp?msg='Masukan salah'");
-				}
+				}*/
 			}
 		} catch (Exception e) {
 			out.println("Ch si");
