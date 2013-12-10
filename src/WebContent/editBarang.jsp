@@ -41,6 +41,7 @@
 			out.println("<div class=\"barang\">");
 			out.println("<form action='UpdateBarang?idBarang="+idBarang+"&type=0' method='get'>");
 			out.println("<input type='hidden' name='idBarang' value="+idBarang+">");
+			out.println("<input type='hidden' name='kategori' value="+idKat+">");
 			out.println("<input type='hidden' name='type' value=0>");
 			out.println("<img width=100px height=100px src=public/img/"+category.toLowerCase()+"/"+barang.getGambar()+" alt="+barang.getNama_inventori()+" width = 150 height=300>");
 			out.println("<br/><pre>Gambar : </pre><input type='text' id='gambar' name='gambar' value='"+barang.getGambar()+"'>");
