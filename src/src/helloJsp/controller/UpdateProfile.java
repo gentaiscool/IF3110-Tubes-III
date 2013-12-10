@@ -39,7 +39,6 @@ public class UpdateProfile extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
 		String[] dataregister = new String[10];
 		dataregister[0] = request.getParameter("nama2");
 		dataregister[0] = dataregister[0].replace(" ", "$");
@@ -61,6 +60,7 @@ public class UpdateProfile extends HttpServlet {
 		dataregister[9] = request.getParameter("kodepos2");
 		dataregister[9] = dataregister[9].replace(" ", "$");
 		
+		HttpSession session = request.getSession();
 		HttpClient client = new DefaultHttpClient();
 		HttpGet request2 = new HttpGet("http://127.0.0.1:8080/Chintalian/UpdateUser?nama2="+dataregister[0]+"&uname="+dataregister[2]
 		+"&pwd2="+dataregister[3]+"&email2="+dataregister[4]+"&nohp2="+dataregister[5]+"&alamat2="+dataregister[6]
@@ -83,7 +83,7 @@ public class UpdateProfile extends HttpServlet {
         String konten = jsonObject.getString("content");
         Integer status = (Integer) jsonObject.get("status");
         PrintWriter out = response.getWriter();
-        if(status == 200){
+        if(status == 500){
 	        out.print(konten);
         } else{
         	out.print("");

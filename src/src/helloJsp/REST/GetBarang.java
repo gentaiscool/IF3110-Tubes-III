@@ -184,4 +184,45 @@ public class GetBarang {
 		+ ",\"content\":\"null\""
 		+ "}";
 	}
+	
+	@GET
+	@Path("/Favorit")
+	@Produces(MediaType.TEXT_XML)
+	public String getFavorit() {
+		DbConnector dbconnector = new DbConnector();
+		Connection connection = dbconnector.mySqlConnection();
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("select * from inventori order by count desc;");
+			
+			JSONObject jObj = new JSONObject();
+			ArrayList<ModelInventori> TabelBarang = new ArrayList<ModelInventori>();
+			
+			while(rs.next()){
+				ModelInventori barang = new ModelInventori();
+				barang.setId_inventori(rs.getInt("id_inventori"));
+				barang.setId_kategori(rs.getInt("id_kategori"));
+				barang.setNama_inventori(rs.getString("nama_inventori"));
+				barang.setJumlah(rs.getInt("jumlah"));
+				barang.setGambar(rs.getString("gambar"));
+				barang.setDescription(rs.getString("description"));
+				barang.setHarga(rs.getInt("harga"));
+				TabelBarang.add(barang);
+			}	
+			
+			jObj.put("content", TabelBarang);
+			jObj.put("detail", "OK");
+			jObj.put("status", 200);
+			
+			return jObj.toString();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "{"
+		+ "\"status\": 200"
+		+ "\"detail\": \"OK\""
+		+ ",\"content\":\"null\""
+		+ "}";
+	}
 }

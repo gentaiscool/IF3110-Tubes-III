@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
 /**
  * Servlet implementation class Validasi
  */
-
 public class Validasi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

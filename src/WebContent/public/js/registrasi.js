@@ -42,7 +42,7 @@ function validate(text, num, pas) {
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			readysubmit(num, xmlhttp.responseText);
-			// alert(xmlhttp.responseText);
+			alert(xmlhttp.responseText);
 			switch (num) {
 			case 1:
 				switch (xmlhttp.responseText) {
