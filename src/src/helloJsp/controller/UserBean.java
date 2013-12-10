@@ -10,8 +10,16 @@ public class UserBean {
 	private String provinsi;
 	private String kota;
 	private String kodepos;
-	private String trans;
+	private Integer trans;
 	
+	public Integer getTrans() {
+		return trans;
+	}
+
+	public void setTrans(Integer trans) {
+		this.trans = trans;
+	}
+
 	public UserBean(){
 		name = null;
 		username = null;
@@ -25,7 +33,7 @@ public class UserBean {
 		trans = null;
 	}
 	
-	public UserBean(String _name,String _username,String _password,String _email,String _nohp,String _alamat,String _provinsi,String _kota,String _kodepos,String _trans){
+	public UserBean(String _name,String _username,String _password,String _email,String _nohp,String _alamat,String _provinsi,String _kota,String _kodepos,Integer _trans){
 		name = _name;
 		username = _username;
 		password = _password;
@@ -108,14 +116,6 @@ public class UserBean {
 
 	public void setKodepos(String kodepos) {
 		this.kodepos = kodepos;
-	}
-
-	public String getTrans() {
-		return trans;
-	}
-
-	public void setTrans(String trans) {
-		this.trans = trans;
 	}
 	
 }

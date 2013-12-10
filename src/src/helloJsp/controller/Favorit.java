@@ -23,6 +23,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.sun.jersey.api.client.Client;
@@ -33,6 +34,9 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 public class Favorit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	static final String REST_URI = "http://localhost:8080/Chintalian";
+    static final String GET_BARANG = "/GetBarang";
+    static final String FAVORIT = "/Favorit";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -54,25 +58,30 @@ public class Favorit extends HttpServlet {
 		//HttpGet request2 = new HttpGet("http://127.0.0.1:8080/Chintalian/GetFavorit");
 		//HttpResponse response2 = client.execute(request2);
 		
-		DbConnector dbconnector = new DbConnector();
-		Connection connection = dbconnector.mySqlConnection();
 		try {
-			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("select * from inventori order by count desc;");
-			JSONObject jObj = new JSONObject();
+			ClientConfig config = new DefaultClientConfig();
+	        Client client = Client.create(config);
+	        WebResource service = client.resource(REST_URI);
+	        WebResource serviceFavorit = service.path("rest").path(GET_BARANG+FAVORIT);
+			
+	     // Parsing
+	        String JSONBarang = " ";
+	        JSONBarang = getOutputAsXML(serviceFavorit);
 			ArrayList<ModelInventori> TabelBarang = new ArrayList<ModelInventori>();
 			
-			while(rs.next()){
-				ModelInventori barang = new ModelInventori();
-				barang.setId_inventori(rs.getInt("id_inventori"));
-				barang.setId_kategori(rs.getInt("id_kategori"));
-				barang.setNama_inventori(rs.getString("nama_inventori"));
-				barang.setJumlah(rs.getInt("jumlah"));
-				barang.setGambar(rs.getString("gambar"));
-				barang.setDescription(rs.getString("description"));
-				barang.setHarga(rs.getInt("harga"));
+			JSONObject obj = new JSONObject(JSONBarang);
+	        JSONArray arr = obj.getJSONArray("content");
+	        for (int i = 0; i < arr.length(); i++) {
+	        	ModelInventori barang = new ModelInventori();
+	        	barang.setId_inventori(arr.getJSONObject(i).getInt("id_inventori"));
+				barang.setId_kategori(arr.getJSONObject(i).getInt("id_kategori"));
+				barang.setNama_inventori(arr.getJSONObject(i).getString("nama_inventori"));
+				barang.setJumlah(arr.getJSONObject(i).getInt("jumlah"));
+				barang.setGambar(arr.getJSONObject(i).getString("gambar"));
+				barang.setDescription(arr.getJSONObject(i).getString("description"));
+				barang.setHarga(arr.getJSONObject(i).getInt("harga"));
 				TabelBarang.add(barang);
-			}	
+	        }
 			session.removeAttribute("favorit");
 			session.setAttribute("favorit", TabelBarang);
 			

@@ -76,6 +76,10 @@
     <servlet-name>CheckCardValidation</servlet-name>
     <servlet-class>helloJsp.REST.CheckCardValidation</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>GetUser</servlet-name>
+    <servlet-class>helloJsp.REST.GetUser</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
     <url-pattern>/Login</url-pattern>
@@ -151,6 +155,10 @@
   <servlet-mapping>
     <servlet-name>CheckCardValidation</servlet-name>
     <url-pattern>/CheckCardValidation</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GetUser</servlet-name>
+    <url-pattern>/GetUser</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>Jersey REST Service</servlet-name>
