@@ -46,9 +46,8 @@
 		<pre id="transaction">Total transaction	:<span id="stransaction">${user.getTrans() }</span>
 		</pre>
 		<span id="edits"><button id="editprof"
-				onClick="editprofile('${user.getUsername()}')">EDITPROF</button>
-			<Button onClick="Registercardform">Daftarkan kartu kredit
-				saya</button></span> <br /> <span id="tails"></span>
+				onClick="editprofile('${user.getUsername()}')">edit profil</button>
+			</span> <br /> <span id="tails"></span>
 	</div>
 
 	<div class="centerbar">

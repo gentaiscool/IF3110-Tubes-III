@@ -1,6 +1,8 @@
 package helloJsp.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,6 +15,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 /**
  * Servlet implementation class CardValidation
@@ -33,52 +42,45 @@ public class CardValidation extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String names, regex, query, expired;
 		int cardnum;
 		boolean bcardnum = false, bname = false;
-		cardnum = Integer.parseInt(request.getParameter("cardnumber"));
+		cardnum = Integer.parseInt(request.getParameter("cardnumber").toString());
 		names = request.getParameter("names");
 		expired = request.getParameter("expired");
+
 		HttpSession session = request.getSession();
 		if (session.getAttribute("user") != null) {
-			DbConnector dbconnector = new DbConnector();
-			Connection connection = dbconnector.mySqlConnection();
-			try {
-				Statement statement = connection.createStatement();
-				bcardnum = (((cardnum%1000)%123)==1 && (cardnum/10000)>0);
-				query = "SELECT * FROM pengguna WHERE username='"
-						+ session.getAttribute("user") + "'";
-				ResultSet rs = statement.executeQuery(query);
-				rs.next();
-				regex = "([A-Za-z]{1,10})+(\\s[A-Za-z]{1,20})+";
-				bname = Pattern.matches(regex, names);
-				if (bname && bcardnum) {
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException ex) {
-						Thread.currentThread().interrupt();
-					}
-					String nokartu = ""+cardnum;
-					session.setAttribute("card",nokartu);
-					query = "UPDATE pengguna SET nomor_credit_card='"+cardnum+"',expired_date='"+expired+"',nama_on_card='"+names+"' WHERE username='"+ session.getAttribute("user") + "'";
-					statement.executeUpdate(query);
-					out.print("valid");
-				} else {
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException ex) {
-						Thread.currentThread().interrupt();
-					}
-					out.print("invalid");
-				}
-			} catch (Exception e) {
-				out.print("EXCEPTION BROH");
+			String user = request.getParameter("user");
+			HttpClient client = new DefaultHttpClient();
+			HttpGet request2 = new HttpGet("http://127.0.0.1:8080/Chintalian/CheckCardValidation?user="+user+"&names="+names+"&expired="+expired+"&cardnum="+cardnum);
+			HttpResponse response2 = client.execute(request2);
+		
+			// Get the response
+			BufferedReader rd = new BufferedReader
+			  (new InputStreamReader(response2.getEntity().getContent()));
+			    
+			String line = "";
+			StringBuffer textView = new StringBuffer();
+			while ((line = rd.readLine()) != null) {
+			  textView.append(line);
 			}
+			
+			//parsing json
+	        JSONTokener jsonTokener = new JSONTokener(textView.toString());
+	        JSONObject jsonObject = new JSONObject(jsonTokener);
+	        String konten = jsonObject.getString("content");
+	        Integer status = (Integer) jsonObject.get("status");
+	        if(status == 500){
+	        	out.print("valid");
+	        } else{
+	        	out.print("invalid");
+	        }
+		
 		}
 	}
 
@@ -86,8 +88,7 @@ public class CardValidation extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
 	}

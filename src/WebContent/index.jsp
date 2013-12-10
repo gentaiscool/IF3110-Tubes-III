@@ -111,35 +111,6 @@
 	}
 	%>
 	</div>
-	<div class="centerbar">
-		<h2>YOUR CART</h2>
-		<%
-			int total = 0;
-			if (session.getAttribute("shoppingCart") != null) {
-				ShoppingCart sc = (ShoppingCart) session.getAttribute("shoppingCart");
-				out.println("");
-				for (int i = 0; i < sc.getItems().size(); i++) {
-					int temp = 0;
-					for (int j = 0; j < TabelBarang.size(); j++) {
-						if(TabelBarang.get(j).getId_inventori() == sc.getItems().get(i).getIdItem()){
-							temp = j;
-							break;
-						}
-					}
-					if(temp>=0)
-						out.println("(" + (i + 1) + ") " + sc.getItems().get(i).getQuantity() + "x " + TabelBarang.get(temp).getNama_inventori()+ " Rp. "+sc.getItems().get(i).getQuantity()*sc.getItems().get(i).getPrice() +",- <button>delete</button><br/>");
-					
-					if(sc.getItems().get(i).getDescription().equals("")){
-						out.println("No special order<br/>");
-					} else
-						out.println("Special order : " + sc.getItems().get(i).getDescription());
-					
-					total += sc.getItems().get(i).getQuantity()*sc.getItems().get(i).getPrice();
-				}
-			}
-			out.println("<br/><b>Total price: Rp. " + total+",-</b>");
-		%>
-	</div>
 		
 	<%@include file="templates/footer.jsp"%>
 

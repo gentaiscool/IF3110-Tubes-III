@@ -3,13 +3,17 @@ package helloJsp.controller;
 import helloJsp.object.Item;
 import helloJsp.object.ShoppingCart;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,32 +24,44 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 
-
 public class Cart extends HttpServlet {
 
 	static final String REST_URI = "http://localhost:8080/Chintalian";
-    static final String INCH_TO_FEET = "/Genta/InchToFeet/";
-    static final String FEET_TO_INCH = "/Genta/FeetToInch/";
-	
+	static final String INCH_TO_FEET = "/Genta/InchToFeet/";
+	static final String FEET_TO_INCH = "/Genta/FeetToInch/";
+
 	public Cart() {
 		// TODO Auto-generated constructor stub
 		super();
 	}
 
 	private static String getResponse(WebResource service) {
-        return service.accept(MediaType.TEXT_XML).get(ClientResponse.class).toString();
-    }
- 
-    private static String getOutputAsXML(WebResource service) {
-        return service.accept(MediaType.TEXT_XML).get(String.class);
-    }
-	
+		return service.accept(MediaType.TEXT_XML).get(ClientResponse.class).toString();
+	}
+
+	private static String getOutputAsXML(WebResource service) {
+		return service.accept(MediaType.TEXT_XML).get(String.class);
+	}
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -64,7 +80,7 @@ public class Cart extends HttpServlet {
 			desc = request.getParameter("desc");
 			stock = Integer.parseInt(request.getParameter("stock"));
 			price = Integer.parseInt(request.getParameter("price"));
-			
+
 			if (stock < quantity) {
 				// fail
 				out.println(-1);
@@ -102,30 +118,41 @@ public class Cart extends HttpServlet {
 				ArrayList<Integer> arr = new ArrayList<Integer>();
 				for (int i = 0; i < sc.getItems().size(); i++) {
 					// syntax
-					DbConnector dbconnector = new DbConnector();
-					Connection connection = dbconnector.mySqlConnection();
-					try {
-						Statement statement = connection.createStatement();
-						String query = "SELECT * FROM inventori WHERE id_inventori=" + sc.getItems().get(i).getIdItem();
-						ResultSet rs = statement.executeQuery(query);
+					HttpClient client = new DefaultHttpClient();
+					List<NameValuePair> list = new ArrayList<NameValuePair>();
+					System.out.println(String.valueOf(sc.getItems().get(i).getQuantity()));
+					list.add(new BasicNameValuePair("quantity", String.valueOf(sc.getItems().get(i).getQuantity())));
+					list.add(new BasicNameValuePair("idItem", String.valueOf(sc.getItems().get(i).getIdItem())));
+					list.add(new BasicNameValuePair("desc", String.valueOf(sc.getItems().get(i).getDescription())));
+					list.add(new BasicNameValuePair("price", String.valueOf(sc.getItems().get(i).getPrice())));
 
-						if (rs.next()) {
-							Integer jumlah = Integer.parseInt(rs.getString("jumlah"));
-							if (jumlah >= sc.getItems().get(i).getQuantity()) {
-								query = "UPDATE inventori SET jumlah =" + (jumlah - sc.getItems().get(i).getQuantity()) + " WHERE id_inventori=" + sc.getItems().get(i).getIdItem();
-								statement.executeUpdate(query);
+					HttpGet httpGet = new HttpGet("http://127.0.0.1:8080/Chintalian/UpdateCreditCard?quantity="+String.valueOf(sc.getItems().get(i).getQuantity())+"&idItem="+String.valueOf(sc.getItems().get(i).getIdItem())+"&desc="+String.valueOf(sc.getItems().get(i).getDescription())+"&price="+String.valueOf(sc.getItems().get(i).getPrice()));
+					
+					HttpResponse response2 = client.execute(httpGet);
 
-								arr.add(i);
-							} else {
-								break;
-							}
-						} else {
-							break;
-						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					// Get the response
+					BufferedReader rd = new BufferedReader
+					  (new InputStreamReader(response2.getEntity().getContent()));
+					    
+					String line = "";
+					StringBuffer textView = new StringBuffer();
+					while ((line = rd.readLine()) != null) {
+					  textView.append(line);
 					}
+					
+					//parsing json
+					System.out.println(textView.toString());
+			        JSONTokener jsonTokener = new JSONTokener(textView.toString());
+			        JSONObject jsonObject = new JSONObject(jsonTokener);
+			        String konten = jsonObject.getString("content");
+			        Integer status = (Integer) jsonObject.get("status");
+			        if(status == 500){
+				        out.print(1);
+			        } else{
+			        	out.print(0);
+			        }
+					
+					arr.add(i);
 					String query = "";
 					if (i == sc.getItems().size() - 1)
 						transactionFinished = true;
@@ -138,30 +165,30 @@ public class Cart extends HttpServlet {
 				if (session.getAttribute("shoppingCart") != null)
 					session.removeAttribute("shoppingCart");
 				if (transactionFinished) {
-					String query = "";
-					DbConnector dbconnector = new DbConnector();
-					Connection connection = dbconnector.mySqlConnection();
-					Statement statement2;
-
-					String username = "genta";
-					query = "SELECT * FROM pengguna WHERE username = '" + username + "';";
+					HttpClient client = new DefaultHttpClient();
+					List<NameValuePair> list = new ArrayList<NameValuePair>();
 					
-					ResultSet rs;
-					try {
-						statement2 = connection.createStatement();
-						rs = statement2.executeQuery(query);
-						if (rs.next()) {
-							Integer total_transaksi = Integer.parseInt(rs.getString("total_transaksi"));
-							query = "UPDATE pengguna SET total_transaksi = " + (total_transaksi + 1) + " WHERE username = '" + username + "';";
-							statement2.executeUpdate(query);
-							out.println(1);
-						} else{
-							out.println(0);
-						}
-						out.println(1);
-					} catch (Exception X) {
-						out.println(-1);
+					HttpGet request2 = new HttpGet("http://127.0.0.1:8080/Chintalian/UpdateTotalTransaksi?username=genta");
+					HttpResponse response2 = client.execute(request2);
+
+					// Get the response
+					BufferedReader rd = new BufferedReader(new InputStreamReader(response2.getEntity().getContent()));
+					
+					String line = "";
+					StringBuffer textView = new StringBuffer();
+					while ((line = rd.readLine()) != null) {
+					  textView.append(line);
 					}
+					//parsing json
+			        JSONTokener jsonTokener = new JSONTokener(textView.toString());
+			        JSONObject jsonObject = new JSONObject(jsonTokener);
+			        String konten = jsonObject.getString("content");
+			        Integer status = (Integer) jsonObject.get("status");
+			        if(status == 500){
+				        out.print(1);
+			        } else{
+			        	out.print(0);
+			        }
 				} else
 					out.println(0);
 			} else {

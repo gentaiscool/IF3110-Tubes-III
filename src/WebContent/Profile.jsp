@@ -158,7 +158,7 @@
 	<pre id="email">Email			:<span id="semail">${user.getEmail()}</span>
 	</pre>
 	<span id="edits"><button id="editprof"
-			onClick="editprofile('${user.getUsername()}')">EDITPROF</button>
+			onClick="editprofile('${user.getUsername()}')">Edit Profil</button>
 		<button onClick="location.href='index.jsp'">Cancel</button></span>
 	<span id="tails"></span>
 </body>

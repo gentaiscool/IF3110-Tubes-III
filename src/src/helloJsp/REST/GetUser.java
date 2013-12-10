@@ -27,7 +27,7 @@ public class GetUser {
 			ResultSet rs = statement.executeQuery("select * from pengguna where username ='" + username + "'");
 			if (rs.next()) {
 				return "{"
-						+ "\"status\": 200"
+						+ "\"status\": 500"
 						+ "\"detail\": \"OK\""
 						+ ",\"content\":{"
 						+ "\"id_pengguna\":" + rs.getInt("id_pengguna")

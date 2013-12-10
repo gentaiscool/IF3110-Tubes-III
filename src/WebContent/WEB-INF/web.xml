@@ -60,6 +60,22 @@
     <servlet-name>UpdateUser</servlet-name>
     <servlet-class>helloJsp.REST.UpdateUser</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>UpdateCreditCard</servlet-name>
+    <servlet-class>helloJsp.REST.UpdateCreditCard</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UpdateTotalTransaksi</servlet-name>
+    <servlet-class>helloJsp.REST.UpdateTotalTransaksi</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>GetFavorit</servlet-name>
+    <servlet-class>helloJsp.REST.GetFavorit</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>CheckCardValidation</servlet-name>
+    <servlet-class>helloJsp.REST.CheckCardValidation</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
     <url-pattern>/Login</url-pattern>
@@ -119,6 +135,22 @@
   <servlet-mapping>
     <servlet-name>UpdateUser</servlet-name>
     <url-pattern>/UpdateUser</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdateCreditCard</servlet-name>
+    <url-pattern>/UpdateCreditCard</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdateTotalTransaksi</servlet-name>
+    <url-pattern>/UpdateTotalTransaksi</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GetFavorit</servlet-name>
+    <url-pattern>/GetFavorit</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CheckCardValidation</servlet-name>
+    <url-pattern>/CheckCardValidation</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>Jersey REST Service</servlet-name>
