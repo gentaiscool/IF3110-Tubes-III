@@ -40,6 +40,7 @@ public class CheckCardValidation extends HttpServlet {
 		String user = request.getParameter("user");
 		String query, regex, names = request.getParameter("names");
 		names = names.replace('*', ' ');
+		user = user.replace('*', ' ');
 		String expired = request.getParameter("expired");
 		
 		DbConnector dbconnector = new DbConnector();

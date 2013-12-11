@@ -53,6 +53,8 @@
 		
 		out.println("<form action='Search' method='get'>");
 		out.println("Search : <input type='text' size=50 name='item' onkeyup='autoComplete(this.value)' placeholder='find names, price, or category here :)'>");
+		out.println("<input type='hidden' name='pagisearch' value=1>");
+		out.println("<input type='submit' value='Cari'>");
 		out.println("</form><br/>");
 		out.println("<p id='searchresult'></p>");
 		%>

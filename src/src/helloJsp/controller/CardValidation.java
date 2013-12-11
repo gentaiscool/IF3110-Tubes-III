@@ -58,8 +58,10 @@ public class CardValidation extends HttpServlet {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("user") != null) {
 			String user = (String) session.getAttribute("user");
+			user = user.replace(' ', '*');
 			HttpClient client = new DefaultHttpClient();
-			HttpGet request2 = new HttpGet(DOMAIN+"/Chintalian/CheckCardValidation?user="+user+"&names="+names+"&expired="+expired+"&cardnum="+cardnum);
+			HttpGet request2 = new HttpGet(DOMAIN+"/CheckCardValidation?user="+user+"&names="+names+"&expired="+expired+"&cardnum="+cardnum);
+			System.out.println(DOMAIN+"/CheckCardValidation?user="+user+"&names="+names+"&expired="+expired+"&cardnum="+cardnum);
 			HttpResponse response2 = client.execute(request2);
 		
 			// Get the response

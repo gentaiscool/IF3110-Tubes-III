@@ -53,6 +53,7 @@ public class Profile extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		try {
 			if (session.getAttribute("user") == null) {
+				System.out.println("lol");
 				String forward = "/registrasi.jsp";
 				RequestDispatcher dispatch = getServletContext().getRequestDispatcher(forward);
 				dispatch.forward(request, response);
