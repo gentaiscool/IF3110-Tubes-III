@@ -1,8 +1,13 @@
-Tugas Besar IF3110 ke-2
+MEMBER
 
-- Fransiskus Xaverius Christian / 13511016
-- Ryan Ignatius Hadiwijaya / 13511070
-- Genta Indra Winata / 13511094
+Kelompok : McdMania
+
+- Dyah Rahmawati (13511012)
+- Rifki Afina Putri (13511066)
+- Genta Indra Winata (13511094)
+
+https://github.com/gentaiscool/IF3110-Tubes-III.git
+http://tokokita.ap01.aws.af.cm/
 
 How to use this Chintalian(Chinese-Italian)website :
 1. Pastikan tomcat versi 7.0 sudah terinstall dengan baik.

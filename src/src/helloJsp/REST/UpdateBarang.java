@@ -1,19 +1,14 @@
 package helloJsp.REST;
 
-/**
- * @author Arpit Mandliya
- */
-
 import helloJsp.controller.DbConnector;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import java.util.*;
+
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -296,6 +291,55 @@ public class UpdateBarang {
 		try {
 			Statement statement = connection.createStatement();
 			statement.executeUpdate("insert into inventori (id_kategori,nama_inventori,gambar,harga,jumlah,description, count) values ("+kategori+", '" + nama + "', '" + gambar + "', " + harga + ", " + jumlah + ", '" + description + "', 0);");
+			return "{"
+			+ "\"status\": 200"
+			+ ",\"detail\": \"OK\""
+			+ ",\"hasil\":" + 1
+			+ "}";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "{"
+			+ "\"status\": 200"
+			+ ",\"detail\": \"OK\""
+			+ ",\"hasil\":" + 0
+			+ "}";
+		}
+	}
+	
+	@GET
+	@Path("/DeleteSelectedItem/{i}")
+	@Produces(MediaType.TEXT_XML)
+	public String DeleteSelectedItem(@PathParam("i") String data) {
+		String strIdBarang ="";
+		List<Integer> deleteItem = new ArrayList<Integer>();		
+		
+		strIdBarang = "";
+		int idBarang;
+		System.out.println(data);
+		int k = 0;
+		for(int i=0; i<data.length(); i++){
+			if(data.charAt(i) == '&'){
+				strIdBarang = data.substring(k, i);
+				idBarang = Integer.parseInt(strIdBarang);
+				deleteItem.add(idBarang);
+				k = i+1;
+			}
+			if(i == data.length()-1){
+				strIdBarang = data.substring(k, i+1);
+				idBarang = Integer.parseInt(strIdBarang);
+				deleteItem.add(idBarang);
+				k = i+1;
+			}
+		}
+		
+		DbConnector dbconnector = new DbConnector();
+		Connection connection = dbconnector.mySqlConnection();
+		try {
+			Statement statement = connection.createStatement();
+			for(int i = 0; i < deleteItem.size(); i++){
+				System.out.println("delete from inventori where id_inventori =" + deleteItem.get(i) + ";");
+				statement.executeUpdate("delete from inventori where id_inventori =" + deleteItem.get(i) + ";");
+			}
 			return "{"
 			+ "\"status\": 200"
 			+ ",\"detail\": \"OK\""

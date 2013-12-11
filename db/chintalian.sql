@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 07, 2013 at 03:51 PM
+-- Generation Time: Dec 11, 2013 at 04:34 AM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.12
 
@@ -40,23 +40,21 @@ CREATE TABLE IF NOT EXISTS `inventori` (
   PRIMARY KEY (`id_inventori`),
   KEY `id_kategori` (`id_kategori`),
   KEY `id_kategori_2` (`id_kategori`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=50 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
 
 --
 -- Dumping data for table `inventori`
 --
 
 INSERT INTO `inventori` (`id_inventori`, `id_kategori`, `nama_inventori`, `jumlah`, `gambar`, `description`, `harga`, `count`) VALUES
-(1, 1, 'Salami', 933, 'salami.jpg', 'Salami is cured sausage, fermented and air-dried meat, originating from one or a variety of animals.', 10, 0),
+(1, 1, 'Salamisssa', 920991, 'salami.jpg', 'aaaaa', 101, 0),
 (2, 1, 'Mortadella', 94, 'mortadella.jpg', 'Mortadella is a large Italian sausage or cold cut made of finely hashed or ground, heat-cured pork sausage, which incorporates at least 15% small cubes of pork fat (principally the hard fat from the neck of the pig).', 9, 0),
-(3, 1, 'Prosciutto', 100, 'prosciutto.jpg', 'Prosciutto or Parma ham is a dry-cured ham that is usually thinly sliced and served uncooked.', 9, 0),
-(4, 1, 'Bresaola', 100, 'bresaola.jpg', 'Bresaola or brisaola is air-dried, salted beef that has been aged two or three months until it becomes hard and turns a dark red, almost purple colour. It is made from top (inside) round, and is lean and tender, with a sweet, musty smell.', 9, 0),
 (5, 1, 'Panino', 100, 'panino.jpg', 'Panino is the word for a sandwich made from bread other than sliced bread.', 9, 0),
 (6, 1, 'Bruschetta', 100, 'bruschetta.jpg', 'Bruschetta is an antipasto from Italy consisting of grilled bread rubbed with garlic and topped with olive oil, salt and pepper.', 9, 0),
 (7, 1, 'Tramezzino', 100, 'tramezzino.jpg', 'Tramezzino is a usually triangular sandwich constructed from two slices of soft white bread with the crusts removed.', 9, 0),
 (8, 1, 'Crostino', 100, 'crostino.jpg', 'Crostino is an Italian appetizer consisting of a small slice of grilled or toasted bread and toppings.', 9, 0),
 (9, 1, 'Prawn cocktail', 100, 'prawncocktail.jpg', 'Prawn cocktail, also known as shrimp cocktail, is a seafood dish consisting of "shelled prawns in Marie Rose sauce, served in a glass".', 9, 0),
-(10, 2, 'Pizza Napoletana', 96, 'napoletana.jpg', 'Neapolitan pizza (pizza napoletana): Authentic Neapolitan pizzas are typically made with tomatoes and Mozzarella cheese.', 9, 0),
+(10, 2, 'Pizza Napoletanas', 96, 'napoletana.jpg', '', 9, 0),
 (11, 2, 'Mexican pizza', 100, 'mexican.jpg', 'Mexican pizza is a pizza made with ingredients typical of Mexican cuisine.', 9, 0),
 (12, 2, 'Brazilian pizza', 100, 'brazilian.jpg', 'Brazilian pizza tends to have less tomato sauce than the Italian version, or uses slices of tomato in place of sauce.', 9, 0),
 (13, 2, 'Swedish pizza', 100, 'swedish.jpg', 'Swedish pizza is mainly of the Neapolitan type and most pizzerias in Sweden have pizzas Margherita, Capricciosa and Quattro Stagioni at the top of the menu, although with altered recipes.', 9, 0),
@@ -85,17 +83,14 @@ INSERT INTO `inventori` (`id_inventori`, `id_kategori`, `nama_inventori`, `jumla
 (36, 4, 'Pandoro', 100, 'pandoro.jpg', 'Pandoro is a traditional Italian sweet yeast bread, most popular around Christmas and New Year.', 9, 0),
 (37, 4, 'Gelato', 100, 'gelato.jpg', 'Gelato is the Italian word for ice cream.', 9, 0),
 (38, 4, 'Sorbet', 100, 'sorbet.jpg', 'Sorbet is a frozen dessert made from sweetened water flavoured with fruit (typically juice or puree), wine, and/or liqueur.', 9, 0),
-(39, 5, 'Campari', 100, 'campari.jpg', 'Campari is an alcoholic liqueur, considered an aperitif (20.5%, 21%, 24%, 25%, or 28% ABV, depending on the country in which it is sold), obtained from the infusion of herbs and fruit (including chinotto and cascarilla) in alcohol and water. It is a bitters characterised by its dark red colour.', 9, 0),
-(40, 5, 'Cinzano', 100, 'cinzano.jpg', 'Cinzano is an Italian brand of vermouth.', 9, 0),
-(41, 5, 'Prosecco', 100, 'prosecco.jpg', 'Prosecco is an Italian sparkling wine.', 9, 0),
 (42, 5, 'Aperol', 100, 'aperol.jpg', 'Aperol is an Italian aperitif originally produced by the Barbieri company, based in Padua.', 9, 0),
-(43, 5, 'Vermouth', 100, 'vermouth.jpg', 'Vermouth is an aromatized fortified wine flavored with various botanicals (roots, barks, flowers, seeds, herbs, spices).', 9, 0),
 (44, 5, 'Wine', 100, 'wine.jpg', 'Wine is an alcoholic beverage made from fermented grapes or other fruits.', 9, 0),
 (45, 5, 'Champagne', 100, 'champagne.jpg', 'Champagne is a sparkling wine produced from grapes grown in the Champagne region of France following rules that demand secondary fermentation of the wine in the bottle to create carbonation.', 9, 0),
 (46, 5, 'Grappa', 100, 'grappa.jpg', 'Grappa is an alcoholic beverage, a fragrant, grape-based pomace brandy of Italian origin that contains 35%?60% alcohol by volume (70 to 120 US proof).', 9, 0),
 (47, 5, 'Amaro', 100, 'amaro.jpg', 'Amaro is an Italian herbal liqueur that is commonly drunk as an after-dinner digestif.', 9, 0),
 (48, 5, 'Limoncello', 100, 'limoncello.jpg', 'Limoncello is an Italian lemon liqueur mainly produced in Southern Italy.', 9, 0),
-(49, 5, 'Espresso', 100, 'espresso.jpg', 'Espresso is coffee brewed by forcing a small amount of nearly boiling water under pressure through finely ground coffee beans.', 9, 0);
+(49, 5, 'Espresso', 100, 'espresso.jpg', 'Espresso is coffee brewed by forcing a small amount of nearly boiling water under pressure through finely ground coffee beans.', 9, 0),
+(50, 1, 'assss', 22121, 'asasas', 'asasas', 1111, 0);
 
 -- --------------------------------------------------------
 
@@ -143,17 +138,20 @@ CREATE TABLE IF NOT EXISTS `pengguna` (
   `expired_date` varchar(10) NOT NULL,
   `nama_on_card` varchar(50) NOT NULL,
   PRIMARY KEY (`id_pengguna`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `pengguna`
 --
 
 INSERT INTO `pengguna` (`id_pengguna`, `nama_pengguna`, `role`, `username`, `password`, `email`, `nomor_hp`, `alamat`, `provinsi`, `kota_kabupaten`, `kode_pos`, `total_transaksi`, `nomor_credit_card`, `expired_date`, `nama_on_card`) VALUES
-(1, 'Genta Winata', 0, 'genta', 'gentaiscool', 'genta@genta.com', '08124612888', 'a', 'Joa', 'Jua', '12345', 2, '2121762124', '2013-12-10', 'ajsia asa'),
+(1, 'Genta Winataaaaaaaa', 0, 'genta', 'gentaiscool', 'genta@genta.com', '121212', 'Gaaaaaaaaaaaaaaaaaaaaaaa', 'aaaaaa', 'Jua', '12345', 5, '12121212121', '2013-12-02', 'asas asa'),
 (2, 'Ryan Ignatius', 0, 'ryanignatius', 'ryaniscool', 'rikeren@keren.com', '08122222222', 'di Bandung', 'di Daerah', 'KOta', '12134', 0, '', '', ''),
 (3, 'admin admin', 1, 'admin', 'adminadmin', 'admin@admin.com', '0', 'a', 'aaaa', 'a', 'a', 0, '', '', ''),
-(4, 'haha haha', 0, 'gentax', 'hahahaha', 'haha@haha.com', '8', 'a', 'a', 'a', '1', 0, '', '', '');
+(4, 'haha haha', 0, 'gentax', 'hahahaha', 'haha@haha.com', '8', 'a', 'a', 'a', '1', 0, '', '', ''),
+(5, 'haahahah aaaa', 0, 'asasasqwqw', 'asasasqw', 'asasa@jsajisja.com', '212122', 'ASA', 'as', 'asasa', '121212', 0, '', '00-00-00', 'dummy'),
+(6, 'haahahah aaaaa', 0, 'asasasqwqwa', 'asasasqwqw', 'asasa@jsajisja.co', '212122', 'ASA', 'as', 'asasa', '121212', 0, '', '00-00-00', 'dummy'),
+(7, 'aa aa', 0, 'gentaaaaaaz', 'aaaaaaaaaaa', 'asasa@jsajisja.coa', '1111', 'aaaaa', 'aa', 'aa', '1212', 0, '', '00-00-00', 'dummy');
 
 -- --------------------------------------------------------
 

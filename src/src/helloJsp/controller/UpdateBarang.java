@@ -31,13 +31,13 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 public class UpdateBarang extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static String DOMAIN = "http://127.0.0.1:8080/Chintalian";
-	//private static String DOMAIN = "http://tokokita.ap01.aws.af.cm";
+	static final String REST_URI = "http://localhost:8080/Chintalian";
     static final String UPDATE_BARANG = "/UpdateBarang";
 	static final String GET_BARANG = "/GetBarang";
 	static final String GET_BARANG_ID = "/GetBarangId";
 	static final String UPDATE_ALL = "/UpdateAll";
 	static final String DELETE = "/Delete";
+	static final String DELETES = "/DeleteSelectedItem";
 	static final String ADD_BARANG = "/AddBarang";
 	
 	/**
@@ -66,7 +66,7 @@ public class UpdateBarang extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		boolean ok = true;
-		int idBarang = 0, type = 0, harga = 0, jumlah = 0, kategori = 0;
+		int idBarang = 0, type = 3, harga = 0, jumlah = 0, kategori = 0;
 		String nama = null, gambar = null, description = null;
 		
 		if (request.getParameter("kategori") != null)
@@ -80,7 +80,7 @@ public class UpdateBarang extends HttpServlet {
 			ok = false;
 		if (request.getParameter("type") != null){
 			type = Integer.parseInt(request.getParameter("type"));
-			//System.out.println(type);
+			System.out.println(type);
 		}
 		else
 			ok = false;
@@ -121,8 +121,30 @@ public class UpdateBarang extends HttpServlet {
 			ResultSet rs = null;
 			ClientConfig config = new DefaultClientConfig();
 			Client client = Client.create(config);
-			WebResource service = client.resource(DOMAIN);
-			if (type == 0) { // update
+			WebResource service = client.resource(REST_URI);
+			if(type == 3){	//delete selected
+				String[] checkdel = request.getParameterValues("cdelete");
+				if (request.getParameterValues("cdelete")!=null){
+					
+					String checkdel2 = checkdel[0];
+					for(int i=1;i<checkdel.length;i++){
+						checkdel2 = checkdel2 + "&" + checkdel[i];
+					}
+					WebResource addService4 = service.path("rest").path(UPDATE_BARANG+DELETES+"/"+checkdel2);
+					//out.println(getOutputAsXML(addService4));
+					
+					//PARSING
+					String JSONHasil4 = getOutputAsXML(addService4);
+					JSONObject obj4 = new JSONObject(JSONHasil4);
+					int hasil4 = obj4.getInt("hasil");
+					
+					if(hasil4 == 1)
+						response.sendRedirect("index.jsp?msg='Delete sukses!'");
+					else 
+						response.sendRedirect("index.jsp?msg='Delete gagal!'");
+				}else
+					response.sendRedirect("index.jsp?msg='Tidak ada yang dipilih'");
+			}else if (type == 0) { // update
 				if (ok) {
 					if (!barang.getNama_inventori().equals(nama)) {
 						WebResource addService1 = service.path("rest").path(UPDATE_BARANG+GET_BARANG+"/"+nama);
@@ -159,7 +181,7 @@ public class UpdateBarang extends HttpServlet {
 							response.sendRedirect("index.jsp?msg='Update sukses!'");
 					}
 				} else {
-					response.sendRedirect("index.jsp?msg='Masukan salah'");
+					response.sendRedirect("index.jsp?msg='Masukan salah0'");
 				}
 			} else if (type == 1) { // delete
 				WebResource addService4 = service.path("rest").path(UPDATE_BARANG+DELETE+"/"+idBarang);
@@ -204,10 +226,10 @@ public class UpdateBarang extends HttpServlet {
 							response.sendRedirect("newBarang.jsp?msg='Kategori tidak terdaftar'");
 						}
 					} else {
-						response.sendRedirect("newBarang.jsp?msg='Masukan salah'");
+						response.sendRedirect("newBarang.jsp?msg='Masukan salah1'");
 					}
 				} else {
-					response.sendRedirect("newBarang.jsp?msg='Masukan salah'");
+					response.sendRedirect("newBarang.jsp?msg='Masukan salah2'");
 				}
 			}
 		} catch (Exception e) {
@@ -236,7 +258,7 @@ public class UpdateBarang extends HttpServlet {
 			Statement statement = connection.createStatement();
 			ClientConfig config = new DefaultClientConfig();
 			Client client = Client.create(config);
-			WebResource service = client.resource(DOMAIN);
+			WebResource service = client.resource(REST_URI);
 			WebResource addService7 = service.path("rest").path(UPDATE_BARANG+GET_BARANG_ID+"/"+idBarang);
 						
 			//PARSING

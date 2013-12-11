@@ -20,7 +20,8 @@
 	<%@include file="templates/header.jsp"%>
 	<%
 		String s = request.getParameter("idPage");
-		int pagi = Integer.parseInt(request.getParameter("pagi"));
+		//int pagi = Integer.parseInt(request.getParameter("pagi"));
+		int pagi = 1;
 		int idKat = Integer.parseInt(s);
 	%>
 	<%
@@ -53,8 +54,6 @@
 		
 		out.println("<form action='Search' method='get'>");
 		out.println("Search : <input type='text' size=50 name='item' onkeyup='autoComplete(this.value)' placeholder='find names, price, or category here :)'>");
-		out.println("<input type='hidden' name='pagisearch' value=1>");
-		out.println("<input type='submit' value='Cari'>");
 		out.println("</form><br/>");
 		out.println("<p id='searchresult'></p>");
 		%>
@@ -67,11 +66,14 @@
 		<% 
 		if(session.getAttribute("user") != null){
 			if (session.getAttribute("user").equals("admin")) {
-				out.println("<button onClick=\"location.href='UpdateBarang?type=2'\">add NEW item</button>");
-				out.println("<button onClick=\"location.href='DeleteSelected.jsp?idPage="+idKat+"'\">DELETE Multiple Items</button>");	
+				//out.print("<button onClick=\"location.href='UpdateBarang?type=2'\">add NEW item</button>");
+				//out.println("<button onClick=\"location.href='DeleteSelected.jsp?idPage="+idKat+"'\">DELETE Multiple Items</button>");
+				//out.print("<form id='formadmin' name='foradmin' action='UpdateBarang?idBarang="+0+"&type=3' onsubmit='return konfirmasidelete())'>");
+				//out.print("<input type='submit' name='buttondelete' value='DELETE Selected Item'>");
 			}
 		}
 		%>
+		
 		<br /> <br />
 	</div>
 
@@ -85,25 +87,53 @@
 				arr.add(i);
 			}
 		}
-
-		for(int i=pagination_divide * (pagi-1); i<pagination_divide*(pagi); i++){
+		
+		
+		if (session.getAttribute("user") != null) {
+			if (session.getAttribute("user").equals("admin")) {
+				out.println("<form action='UpdateBarang?idBarang="+3+"&type=3' method='get'>");
+				for(int i=pagination_divide * (pagi-1); i<pagination_divide*(pagi); i++){
+					if(i>=count) break;
+					out.println("<div class=\"barang\">");
+					out.println("<img width=100px height=100px src=public/img/" + category.toLowerCase() + "/" + TabelBarang.get(arr.get(i)).getGambar() + " alt=" + TabelBarang.get(arr.get(i)).getNama_inventori() + " width = 150 height=300>");
+					out.println("<br/><a href=detailBarang.jsp?idBarang=" + TabelBarang.get(arr.get(i)).getId_inventori() + ">" + TabelBarang.get(arr.get(i)).getNama_inventori() + "</a><br>");
+					out.println("Harga: " + TabelBarang.get(arr.get(i)).getHarga());
+					out.println("<br/>Stok: " + TabelBarang.get(arr.get(i)).getJumlah());
+					//out.println("<button onClick=\"location.href='EditBarang?idBarang=" + TabelBarang.get(arr.get(i)).getId_inventori() + "'\">EDIT</button>");	
+				//	out.println("<form method=post action='Category?idPage="+idKat+"&pagi=1'>");	
+						out.println("<input type='checkbox' name='cdelete' value= " + TabelBarang.get(arr.get(i)).getId_inventori() + ">");
+						//out.println("<input type=submit value='CHECK'>");
+					//out.println("</form>");
+					out.println("</div>");
+				}
+				out.print("<br/><input type='submit' name='buttondelete' value='DELETE Selected Item'>");
+				out.print("</form>");
+			}else{
+				for(int i=pagination_divide * (pagi-1); i<pagination_divide*(pagi); i++){
+					if(i>=count) break;
+					out.println("<div class=\"barang\">");
+					out.println("<img width=100px height=100px src=public/img/" + category.toLowerCase() + "/" + TabelBarang.get(arr.get(i)).getGambar() + " alt=" + TabelBarang.get(arr.get(i)).getNama_inventori() + " width = 150 height=300>");
+					out.println("<br/><a href=detailBarang.jsp?idBarang=" + TabelBarang.get(arr.get(i)).getId_inventori() + ">" + TabelBarang.get(arr.get(i)).getNama_inventori() + "</a><br>");
+					out.println("Harga: " + TabelBarang.get(arr.get(i)).getHarga());
+					out.println("<br/>Stok: " + TabelBarang.get(arr.get(i)).getJumlah());
+					out.println("<br/><input id='num"+i+"' type='number' size=5 placeholder='jumlah'>");
+					out.println("<input type='hidden' id='idPage' name='idPage' value=" + idKat + ">");
+					out.println("<input type='submit' value='beli' onClick=\"addToCart(document.getElementById('num"+arr.get(i)+"').value,"+(arr.get(i)+1)+",'', "+TabelBarang.get(arr.get(i)).getJumlah()+","+TabelBarang.get(arr.get(i)).getHarga()+")\">");
+					out.println("</div>");
+				}
+			}
+		}else{
+			for(int i=pagination_divide * (pagi-1); i<pagination_divide*(pagi); i++){
 			if(i>=count) break;
 			out.println("<div class=\"barang\">");
 			out.println("<img width=100px height=100px src=public/img/" + category.toLowerCase() + "/" + TabelBarang.get(arr.get(i)).getGambar() + " alt=" + TabelBarang.get(arr.get(i)).getNama_inventori() + " width = 150 height=300>");
 			out.println("<br/><a href=detailBarang.jsp?idBarang=" + TabelBarang.get(arr.get(i)).getId_inventori() + ">" + TabelBarang.get(arr.get(i)).getNama_inventori() + "</a><br>");
 			out.println("Harga: " + TabelBarang.get(arr.get(i)).getHarga());
 			out.println("<br/>Stok: " + TabelBarang.get(arr.get(i)).getJumlah());
-			if (session.getAttribute("user") != null) {
-				if (session.getAttribute("user").equals("admin")) {
-					out.println("<button onClick=\"location.href='EditBarang?idBarang=" + TabelBarang.get(arr.get(i)).getId_inventori() + "'\">EDIT</button>");
-				} else {
-					out.println("<br/><input id='num"+i+"' type='number' size=5 placeholder='jumlah'>");
-					out.println("<input type='hidden' id='idPage' name='idPage' value=" + idKat + ">");
-					out.println("<input type='submit' value='beli' onClick=\"addToCart(document.getElementById('num"+arr.get(i)+"').value,"+(arr.get(i)+1)+",'', "+TabelBarang.get(arr.get(i)).getJumlah()+","+TabelBarang.get(arr.get(i)).getHarga()+")\">");
-				}
-			}
 			out.println("</div>");
+			}
 		}
+		
 		int totals = count/pagination_divide;
 		if(count % pagination_divide > 0) totals++;
 		
@@ -174,6 +204,17 @@
 			xmlhttp.open("GET","Search?item="+str,true);
 			xmlhttp.send();
 		}
+	</script>
+	<script>
+	function konfirmasidelete(){
+		var user_choice = window.confirm('Delete Selected Item?');
+		if(user_choice==true) {
+				alert("delete sukses");
+			return true;
+		} else {
+			return false;
+		}		
+	}
 	</script>
 </body>
 </html>

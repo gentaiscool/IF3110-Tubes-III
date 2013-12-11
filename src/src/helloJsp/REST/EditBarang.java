@@ -1,9 +1,5 @@
 package helloJsp.REST;
 
-/**
- * @author Arpit Mandliya
- */
-
 import helloJsp.controller.DbConnector;
 
 import java.sql.Connection;
