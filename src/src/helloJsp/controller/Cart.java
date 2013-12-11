@@ -45,9 +45,8 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 public class Cart extends HttpServlet {
 
-	static final String REST_URI = "http://localhost:8080/Chintalian";
-	static final String INCH_TO_FEET = "/Genta/InchToFeet/";
-	static final String FEET_TO_INCH = "/Genta/FeetToInch/";
+	private static String DOMAIN = "http://127.0.0.1:8080/Chintalian";
+	//private static String DOMAIN = "http://tokokita.ap01.aws.af.cm";
 
 	public Cart() {
 		// TODO Auto-generated constructor stub
@@ -126,7 +125,7 @@ public class Cart extends HttpServlet {
 					list.add(new BasicNameValuePair("desc", String.valueOf(sc.getItems().get(i).getDescription())));
 					list.add(new BasicNameValuePair("price", String.valueOf(sc.getItems().get(i).getPrice())));
 
-					HttpGet httpGet = new HttpGet("http://127.0.0.1:8080/Chintalian/UpdateCreditCard?quantity="+String.valueOf(sc.getItems().get(i).getQuantity())+"&idItem="+String.valueOf(sc.getItems().get(i).getIdItem())+"&desc="+String.valueOf(sc.getItems().get(i).getDescription())+"&price="+String.valueOf(sc.getItems().get(i).getPrice()));
+					HttpGet httpGet = new HttpGet(DOMAIN+"/UpdateCreditCard?quantity="+String.valueOf(sc.getItems().get(i).getQuantity())+"&idItem="+String.valueOf(sc.getItems().get(i).getIdItem())+"&desc="+String.valueOf(sc.getItems().get(i).getDescription())+"&price="+String.valueOf(sc.getItems().get(i).getPrice()));
 					
 					HttpResponse response2 = client.execute(httpGet);
 
@@ -168,7 +167,10 @@ public class Cart extends HttpServlet {
 					HttpClient client = new DefaultHttpClient();
 					List<NameValuePair> list = new ArrayList<NameValuePair>();
 					
-					HttpGet request2 = new HttpGet("http://127.0.0.1:8080/Chintalian/UpdateTotalTransaksi?username=genta");
+					String username = "genta";
+					if(session.getAttribute("user") != null)
+						username = session.getAttribute("user").toString();
+					HttpGet request2 = new HttpGet(DOMAIN+"/UpdateTotalTransaksi?username="+username);
 					HttpResponse response2 = client.execute(request2);
 
 					// Get the response

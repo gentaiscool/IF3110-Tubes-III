@@ -47,7 +47,8 @@ public class Search extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			ArrayList<String> groups = new ArrayList<String>();
 			try {
-				Statement statement = connection.createStatement();
+				Statement statement;
+				statement = connection.prepareStatement("select * from inventori;");
 				ResultSet rs = statement.executeQuery("select * from inventori;");
 				while (rs.next()) {
 					listNama.add(rs.getString("nama_inventori").toLowerCase());
@@ -62,7 +63,7 @@ public class Search extends HttpServlet {
 				
 				listNama = new ArrayList<String>();
 				listId = new ArrayList<Integer>();
-				statement = connection.createStatement();
+				statement = connection.prepareStatement("select * from inventori;");
 				rs = statement.executeQuery("select * from inventori;");
 				while (rs.next()) {
 					listNama.add(rs.getString("nama_inventori").toLowerCase());

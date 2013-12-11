@@ -6,95 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="public/css/style.css">
+<script type="text/javascript" src="public/js/registrasi.js"></script>
 <title>Profile Page</title>
 
 <%@ page import="java.util.ArrayList"%>
 
 <script>
-	function validate(text, num, pas) {
-		var xmlhttp;
-		var validpic = '<img src="public/img/like.png" width="15" height="15"/>';
-		var invalidpic = '<img src="public/img/unlike.png" width="15" height="15"/>';
-		var wait = '<img src="public/img/ajaxLoader.gif" width="15" height="15"/>';
-		var valid = false;
-		var temp = "" + text;
-		if (temp.length == 0) {
-			if (num == 1)
-				document.getElementById("validasiNama2").innerHTML = "";
-			else if (num == 3)
-				document.getElementById("validasiPass2").innerHTML = "";
-			else if (num == 5)
-				document.getElementById("validasiEmail2").innerHTML = "";
-			return;
-		}
-		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-			xmlhttp = new XMLHttpRequest();
-		} else {// code for IE6, IE5
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				//readysubmit(num,xmlhttp.responseText);
-
-				switch (num) {
-				case 1:
-					switch (xmlhttp.responseText) {
-					case '0':
-						document.getElementById("validasiNama2").innerHTML = validpic;
-						break;
-					default:
-						document.getElementById("validasiNama2").innerHTML = invalidpic
-								+ " (Nama harus terdiri dari karakter(A-Z)(a-z). Minimal 2 kata.)";
-						break;
-					}
-					break;
-				case 3:
-					switch (xmlhttp.responseText) {
-					case '0':
-						document.getElementById("validasiPass2").innerHTML = validpic;
-						break;
-					case '1':
-						document.getElementById("validasiPass2").innerHTML = invalidpic
-								+ " (Password tidak boleh sama dengan username)";
-						break;
-					case '2':
-						document.getElementById("validasiPass2").innerHTML = invalidpic
-								+ " (Password minimal 8 karakter)";
-						break;
-					}
-					break;
-				case 5:
-					switch (xmlhttp.responseText) {
-					case '0':
-						document.getElementById("validasiEmail2").innerHTML = validpic;
-						break;
-					case '1':
-						document.getElementById("validasiEmail2").innerHTML = invalidpic
-								+ " (Invalid Email)";
-						break;
-					}
-					break;
-				}
-			} else {
-				switch (num) {
-				case 1:
-					document.getElementById("validasiNama2").innerHTML = wait;
-					break;
-				case 3:
-					document.getElementById("validasiPass2").innerHTML = wait;
-					break;
-				case 5:
-					document.getElementById("validasiEmail2").innerHTML = wait;
-					break;
-				}
-			}
-		}
-		xmlhttp.open("GET", "Validasi?q=" + temp + "&num=" + num + "&pass="
-				+ pas, true);
-		xmlhttp.send();
-	}
-
 	function updateprofile(nama, uname, pwd, email, nohp, alamat, provinsi,
 			kota, kodepos) {
 		var xmlhttp;

@@ -4,6 +4,11 @@
 	src: url(../fonts/DKCrayonCrumble.ttf) format("truetype");
 }
 
+#mask
+{
+	background-color: #000000;
+}
+
 #starter
 {
 	background-color:#000000;

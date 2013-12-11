@@ -29,7 +29,8 @@ import org.json.JSONTokener;
 
 public class CardValidation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static String DOMAIN = "http://127.0.0.1:8080/Chintalian";
+	//private static String DOMAIN = "http://tokokita.ap01.aws.af.cm";
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -47,18 +48,18 @@ public class CardValidation extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String names, regex, query, expired;
-		int cardnum;
+		String cardnum;
 		boolean bcardnum = false, bname = false;
-		cardnum = Integer.parseInt(request.getParameter("cardnumber").toString());
+		cardnum = request.getParameter("cardnumber");
 		names = request.getParameter("names");
 		names = names.replace(' ', '*');
 		expired = request.getParameter("expired");
 
 		HttpSession session = request.getSession();
 		if (session.getAttribute("user") != null) {
-			String user = request.getParameter("user");
+			String user = (String) session.getAttribute("user");
 			HttpClient client = new DefaultHttpClient();
-			HttpGet request2 = new HttpGet("http://127.0.0.1:8080/Chintalian/CheckCardValidation?user="+user+"&names="+names+"&expired="+expired+"&cardnum="+cardnum);
+			HttpGet request2 = new HttpGet(DOMAIN+"/Chintalian/CheckCardValidation?user="+user+"&names="+names+"&expired="+expired+"&cardnum="+cardnum);
 			HttpResponse response2 = client.execute(request2);
 		
 			// Get the response

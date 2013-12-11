@@ -29,7 +29,8 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 public class EditBarang extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    static final String REST_URI = "http://localhost:8080/Chintalian";
+	private static String DOMAIN = "http://127.0.0.1:8080/Chintalian";
+	//private static String DOMAIN = "http://tokokita.ap01.aws.af.cm";
     static final String EDIT_BARANG = "/EditBarang";
 	static final String GET_BARANG_ID = "/GetBarangId";
     /**
@@ -65,7 +66,7 @@ public class EditBarang extends HttpServlet {
 		
 			ClientConfig config = new DefaultClientConfig();
 			Client client = Client.create(config);
-			WebResource service = client.resource(REST_URI);
+			WebResource service = client.resource(DOMAIN);
 			WebResource addService1 = service.path("rest").path(EDIT_BARANG+GET_BARANG_ID+"/"+idBarang);
 			out.println(getOutputAsXML(addService1));
 			
@@ -123,7 +124,7 @@ public class EditBarang extends HttpServlet {
 			
 			ClientConfig config = new DefaultClientConfig();
 			Client client = Client.create(config);
-			WebResource service = client.resource(REST_URI);
+			WebResource service = client.resource(DOMAIN);
 			WebResource addService1 = service.path("rest").path(EDIT_BARANG+GET_BARANG_ID+"/"+idBarang);
 			
 			//PARSING

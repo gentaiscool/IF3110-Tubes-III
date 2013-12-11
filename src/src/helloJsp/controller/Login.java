@@ -32,7 +32,8 @@ import com.sun.jersey.api.client.WebResource;
 
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	static final String REST_URI = "http://localhost:8080/Chintalian";
+	private static String DOMAIN = "http://127.0.0.1:8080/Chintalian";
+	//private static String DOMAIN = "http://tokokita.ap01.aws.af.cm";
 	static final String GET_USER = "/GetUser";
 	static final String LOGIN = "/login";
 
@@ -73,10 +74,8 @@ public class Login extends HttpServlet {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		try {
-			Statement statement = connection.createStatement();
-
 			HttpClient client = new DefaultHttpClient();
-			HttpGet request2 = new HttpGet("http://127.0.0.1:8080/Chintalian/GetUser?username=" + username + "&password=" + password + "&type=2");
+			HttpGet request2 = new HttpGet(DOMAIN+"/GetUser?username=" + username + "&password=" + password + "&type=2");
 			HttpResponse response2 = client.execute(request2);
 
 			// Get the response
@@ -91,24 +90,51 @@ public class Login extends HttpServlet {
 			// parsing json
 			JSONTokener jsonTokener = new JSONTokener(textView.toString());
 			JSONObject jsonObject = new JSONObject(jsonTokener);
-			JSONObject content = (JSONObject) jsonObject.get("content");
 			Integer status = (Integer) jsonObject.get("status");
 
 			if (status == 500) {
+				JSONObject content = (JSONObject) jsonObject.get("content");
 				Integer id_pengguna = Integer.parseInt((content.get("id_pengguna").toString()));
 				String nama_pengguna = (String) content.get("nama_pengguna");
 
 				session.setAttribute("user", username);
 				// setting session to expiry in 30 mins
-				session.setMaxInactiveInterval(1800);
+				//session.setMaxInactiveInterval(1800);
 				Cookie userName = new Cookie("user", username);
 				// userName.setMaxAge(30*60);
+				
+				client = new DefaultHttpClient();
+				request2 = new HttpGet(DOMAIN+"/GetUser?data=" + username + "&type=4");
+				System.out.println(DOMAIN+"/GetUser?data=" + username + "&type=4");
+				response2 = client.execute(request2);
+
+				// Get the response
+			    rds = new BufferedReader(new InputStreamReader(response2.getEntity().getContent()));
+
+				line = "";
+				textView = new StringBuffer();
+				while ((line = rds.readLine()) != null) {
+					textView.append(line);
+				}
+				System.out.print(textView.toString());
+				// parsing json
+				jsonTokener = new JSONTokener(textView.toString());
+				jsonObject = new JSONObject(jsonTokener);
+				status = (Integer) jsonObject.get("status");
+
+				if (status != 500) {
+					session.setAttribute("card", true);
+				} else{
+					
+				}
+				
+				
 				response.addCookie(userName);
 				response.sendRedirect("LoginSuccessful.jsp");
 			} else {
-				RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
-				out.println("<font color=red>Either user name or password is wrong.</font>");
-				rd.include(request, response);
+				//RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
+				out.println("<font color=red>Either user name or password is wrong. Press back button.</font>");
+				//rd.include(request, response);
 			}
 		} catch (Exception e) {
 			out.println("Ch si");

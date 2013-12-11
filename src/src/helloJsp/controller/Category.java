@@ -33,7 +33,8 @@ import org.json.JSONArray;
 
 public class Category extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	static final String REST_URI = "http://localhost:8080/Chintalian";
+	private static String DOMAIN = "http://127.0.0.1:8080/Chintalian";
+	//private static String DOMAIN = "http://tokokita.ap01.aws.af.cm";
     static final String GET_BARANG = "/GetBarang";
     static final String KATEGORI = "/kategori";
     static final String PRICE = "/sortByPrice";
@@ -70,7 +71,7 @@ public class Category extends HttpServlet {
 		try {
 			ClientConfig config = new DefaultClientConfig();
 	        Client client = Client.create(config);
-	        WebResource service = client.resource(REST_URI);
+	        WebResource service = client.resource(DOMAIN);
 	        WebResource addServiceKategori = service.path("rest").path(GET_BARANG+KATEGORI+"/"+idKat);
 	        WebResource addServiceSortHarga = service.path("rest").path(GET_BARANG+PRICE+"/"+idKat);
 	        WebResource addServiceSortNama = service.path("rest").path(GET_BARANG+NAME+"/"+idKat);
@@ -128,7 +129,7 @@ public class Category extends HttpServlet {
 		try {
 			ClientConfig config = new DefaultClientConfig();
 	        Client client = Client.create(config);
-	        WebResource service = client.resource(REST_URI);
+	        WebResource service = client.resource(DOMAIN);
 	        WebResource addServiceKategori = service.path("rest").path(GET_BARANG+KATEGORI+"/"+idKat);
 	        WebResource addServiceSortHarga = service.path("rest").path(GET_BARANG+PRICE+"/"+idKat);
 	        WebResource addServiceSortNama = service.path("rest").path(GET_BARANG+NAME+"/"+idKat);

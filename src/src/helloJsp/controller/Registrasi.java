@@ -63,35 +63,19 @@ public class Registrasi extends HttpServlet {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		try {
-			Statement statement = connection.createStatement();
 			int k = 0;
-			
+			out.println("aa");
 			AddUserProxy p = new AddUserProxy();
 			String result = p.createUser(dataregister[0], dataregister[2], dataregister[3], dataregister[4], dataregister[5], dataregister[6], dataregister[7], dataregister[8], dataregister[9]);
 			out.println("deng : " + result);
-			/*String query = "INSERT INTO pengguna(nama_pengguna,role,username,password,email,nomor_hp,alamat,provinsi,kota_kabupaten,kode_pos,total_transaksi)values(";
-			for (String s : dataregister) {
-				if (!s.equals(null) && !s.equals("")) {
-					if (k != 1) {
-						query += "'" + s + "',";
-					} else
-						query += s + ",";
-				} else
-					query += null + ",";
-				k++;
-			}
-			query += 0 + ")";
-			out.println("1a");
-			out.println(query);
-			statement.executeUpdate(query);*/
 			
 			if(result.equals("1")){
 				out.println("lol1");
 				session.setAttribute("user", dataregister[0]);
 				// setting session to expiry in 30 mins
-				session.setMaxInactiveInterval(1800);
+				//session.setMaxInactiveInterval(1800);
 				Cookie userName = new Cookie("user", dataregister[2]);
-				userName.setMaxAge(30 * 60);
+				//userName.setMaxAge(30 * 60);
 
 				response.addCookie(userName);
 				response.sendRedirect("registerCardForm.jsp");

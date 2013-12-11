@@ -31,7 +31,8 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 public class UpdateBarang extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	static final String REST_URI = "http://localhost:8080/Chintalian";
+	private static String DOMAIN = "http://127.0.0.1:8080/Chintalian";
+	//private static String DOMAIN = "http://tokokita.ap01.aws.af.cm";
     static final String UPDATE_BARANG = "/UpdateBarang";
 	static final String GET_BARANG = "/GetBarang";
 	static final String GET_BARANG_ID = "/GetBarangId";
@@ -120,7 +121,7 @@ public class UpdateBarang extends HttpServlet {
 			ResultSet rs = null;
 			ClientConfig config = new DefaultClientConfig();
 			Client client = Client.create(config);
-			WebResource service = client.resource(REST_URI);
+			WebResource service = client.resource(DOMAIN);
 			if (type == 0) { // update
 				if (ok) {
 					if (!barang.getNama_inventori().equals(nama)) {
@@ -235,7 +236,7 @@ public class UpdateBarang extends HttpServlet {
 			Statement statement = connection.createStatement();
 			ClientConfig config = new DefaultClientConfig();
 			Client client = Client.create(config);
-			WebResource service = client.resource(REST_URI);
+			WebResource service = client.resource(DOMAIN);
 			WebResource addService7 = service.path("rest").path(UPDATE_BARANG+GET_BARANG_ID+"/"+idBarang);
 						
 			//PARSING

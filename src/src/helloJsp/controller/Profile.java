@@ -30,6 +30,8 @@ import org.json.JSONTokener;
 
 public class Profile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static String DOMAIN = "http://127.0.0.1:8080/Chintalian";
+	//private static String DOMAIN = "http://tokokita.ap01.aws.af.cm";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -55,13 +57,12 @@ public class Profile extends HttpServlet {
 				RequestDispatcher dispatch = getServletContext().getRequestDispatcher(forward);
 				dispatch.forward(request, response);
 			} else {
-				Statement statement = connection.createStatement();
 				int k = 0;
 				String data = "";
 				//String query = "SELECT * FROM pengguna where username='" + session.getAttribute("user") + "'";
 				
 				HttpClient client = new DefaultHttpClient();
-				HttpGet request2 = new HttpGet("http://127.0.0.1:8080/Chintalian/GetUser?data="+session.getAttribute("user")+"&type=1");
+				HttpGet request2 = new HttpGet(DOMAIN+"/GetUser?data="+session.getAttribute("user")+"&type=1");
 				HttpResponse response2 = client.execute(request2);
 				
 				// Get the response
@@ -90,6 +91,9 @@ public class Profile extends HttpServlet {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			String forward = "/viewProfile.jsp";
+			RequestDispatcher dispatch = getServletContext().getRequestDispatcher(forward);
+			dispatch.forward(request, response);
 		}
 	}
 

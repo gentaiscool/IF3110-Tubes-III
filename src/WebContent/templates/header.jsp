@@ -1,21 +1,26 @@
 <div class="header">
 	<div class="logo">
-		<a href="./index.jsp"><img src="public/img/canopy.png" width="100%"></a>
+		<a href="./index.jsp"><img src="public/img/canopy.png"
+			width="100%"></a>
 	</div>
+	<script>
+		function login(){
+			document.getElementById("mask").style.opacity=1;
+			document.getElementById("mask").style.top="30%";
+			document.getElementById("mask").style.left="30%"
+			document.getElementById("mask").style.padding="20px";
+		}
+	</script>
 	<div class="navigation">
 		<a href="Category?idPage=1&pagi=1">
 			<div id="navigator">APPETIZER</div>
-		</a>
-		<a href="Category?idPage=2&pagi=1">
+		</a> <a href="Category?idPage=2&pagi=1">
 			<div id="navigator">PIZZA</div>
-		</a>
-		<a href="Category?idPage=3&pagi=1">
+		</a> <a href="Category?idPage=3&pagi=1">
 			<div id="navigator">PASTA</div>
-		</a>
-		<a href="Category?idPage=4&pagi=1">
+		</a> <a href="Category?idPage=4&pagi=1">
 			<div id="navigator">DESSERTS</div>
-		</a>
-		<a href="Category?idPage=5&pagi=1">
+		</a> <a href="Category?idPage=5&pagi=1">
 			<div id="navigator">BEVERAGES</div>
 		</a>
 	</div>
@@ -27,45 +32,55 @@
 			<a href="Profile"><img src="public/img/user.png" width="90"></a>
 		</div>
 		<div class="picture">
-			<a href="registerCardForm.jsp"><img src="public/img/card.png" width="90"></a>
+			<a href="registerCardForm.jsp"><img src="public/img/card.png"
+				width="90"></a>
 		</div>
 	</div>
+	<div id="mask" class="mask">
+		<%@include file="../login.jsp"%>
+	</div>
+	<script>
+		document.getElementById("mask").style.opacity=0;
+		document.getElementById("mask").style.position="absolute";
+		document.getElementById("mask").style.top=0;
+		document.getElementById("mask").style.left=0;
+	</script>
+
 	<%
 		//allow access only if session exists
-		String user = null;
-		String userName = null;
-		String sessionID = null;
-		if (session.getAttribute("user") == null) {
-			//response.sendRedirect("index.jsp");
-			%>
-			<div class="words">
-				<h3>
-				Ciao! Welcome to Chintalian! :3
-				</h3>
-				<button onClick="location.href='login.jsp'">Login</button>
-				<button onClick="location.href='registrasi.jsp'">Registrasi user</button>
-			</div>
-		<%
+			String user = null;
+			String userName = null;
+			String sessionID = null;
+			if (session.getAttribute("user") == null) {
+		//response.sendRedirect("index.jsp");
+	%>
+	<div class="words">
+		<h3>Ciao! Welcome to Chintalian! :3</h3>
+		<button onClick="login()">Login</button>
+		<button onClick="location.href='registrasi.jsp'">Registrasi
+			user</button>
+	</div>
+	<%
 		} else{
-			user = (String) session.getAttribute("user");		
-			Cookie[] cookies = request.getCookies();
-			if (cookies != null) {
-				for (Cookie cookie : cookies) {
-					if (cookie.getName().equals("user"))
-						userName = cookie.getValue();
-					if (cookie.getName().equals("JSESSIONID"))
-						sessionID = cookie.getValue();
-				}
+		user = (String) session.getAttribute("user");		
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("user"))
+					userName = cookie.getValue();
+				if (cookie.getName().equals("JSESSIONID"))
+					sessionID = cookie.getValue();
 			}
-			%>
-			<div class="words">
-				<h3>
-				Hi
-				<a class="light" href="./Profile"><%=userName%></a>, Welcome to Chintalian! :3
-				</h3>
-				<button onClick="location.href='Logout'">Logout</button>
-			</div>
-			<%
+		}
+	%>
+	<div class="words">
+		<h3>
+			Hi <a class="light" href="./Profile"><%=userName%></a>, Welcome to
+			Chintalian! :3
+		</h3>
+		<button onClick="location.href='Logout'">Logout</button>
+	</div>
+	<%
 		}
 	%>
 	<script>

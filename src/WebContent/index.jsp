@@ -14,21 +14,8 @@
 	<%
 		ArrayList<ModelInventori> TabelBarang = new ArrayList<ModelInventori>();
 	%>
+	
 	<%@include file="templates/header.jsp"%>
-
-		<!--  <div class="content">
-			<button onClick=""><<</button>
-			<div id="contents">
-				<img src="public/img/logo.png" width="300">
-			</div>
-			<div id="contents">
-				<img src="public/img/logo.png" width="300">
-			</div>
-			<div id="contents">
-				<img src="public/img/logo.png" width="300">
-			</div>
-			<div id="contents"><button>>></button></div>
-		</div>-->
 	
 	</div>
 	
@@ -52,7 +39,7 @@
 			if (TabelBarang.get(i).getId_kategori() == 1){
 				out.println("<div class=\"barang\">");
 				out.println("<img width=100px height=100px src=public/img/appetizer/" + TabelBarang.get(i).getGambar() + " alt=" + TabelBarang.get(i).getNama_inventori() + " width = 150 height=300>");
-				out.println("<br/><a href='detailBarang.jsp?idBarang="+(TabelBarang.get(i).getId_inventori()-1)+"'>"+TabelBarang.get(i).getNama_inventori() + "</a><br>");
+				out.println("<br/><a href='detailBarang.jsp?idBarang="+(TabelBarang.get(i).getId_inventori())+"'>"+TabelBarang.get(i).getNama_inventori() + "</a><br>");
 				out.println("</div>");
 				j++;
 				if (j == 3) break;
@@ -64,7 +51,7 @@
 			if (TabelBarang.get(i).getId_kategori() == 2){
 				out.println("<div class=\"barang\">");
 				out.println("<img width=100px height=100px src=public/img/pizza/" + TabelBarang.get(i).getGambar() + " alt=" + TabelBarang.get(i).getNama_inventori() + " width = 150 height=300>");
-				out.println("<br/><a href='detailBarang.jsp?idBarang="+(TabelBarang.get(i).getId_inventori()-1)+"'>"+TabelBarang.get(i).getNama_inventori() + "</a><br>");
+				out.println("<br/><a href='detailBarang.jsp?idBarang="+(TabelBarang.get(i).getId_inventori())+"'>"+TabelBarang.get(i).getNama_inventori() + "</a><br>");
 				out.println("</div>");
 				j++;
 				if (j == 3) break;
@@ -76,7 +63,7 @@
 			if (TabelBarang.get(i).getId_kategori() == 3){
 				out.println("<div class=\"barang\">");
 				out.println("<img width=100px height=100px src=public/img/pasta/" + TabelBarang.get(i).getGambar() + " alt=" + TabelBarang.get(i).getNama_inventori() + " width = 150 height=300>");
-				out.println("<br/><a href='detailBarang.jsp?idBarang="+(TabelBarang.get(i).getId_inventori()-1)+"'>"+TabelBarang.get(i).getNama_inventori() + "</a><br>");
+				out.println("<br/><a href='detailBarang.jsp?idBarang="+(TabelBarang.get(i).getId_inventori())+"'>"+TabelBarang.get(i).getNama_inventori() + "</a><br>");
 				out.println("</div>");
 				j++;
 				if (j == 3) break;
@@ -88,7 +75,7 @@
 			if (TabelBarang.get(i).getId_kategori() == 4){
 				out.println("<div class=\"barang\">");
 				out.println("<img width=100px height=100px src=public/img/desserts/" + TabelBarang.get(i).getGambar() + " alt=" + TabelBarang.get(i).getNama_inventori() + " width = 150 height=300>");
-				out.println("<br/><a href='detailBarang.jsp?idBarang="+(TabelBarang.get(i).getId_inventori()-1)+"'>"+TabelBarang.get(i).getNama_inventori() + "</a><br>");
+				out.println("<br/><a href='detailBarang.jsp?idBarang="+(TabelBarang.get(i).getId_inventori())+"'>"+TabelBarang.get(i).getNama_inventori() + "</a><br>");
 				out.println("</div>");
 				j++;
 				if (j == 3) break;
@@ -100,7 +87,7 @@
 			if (TabelBarang.get(i).getId_kategori() == 5){
 				out.println("<div class=\"barang\">");
 				out.println("<img width=100px height=100px src=public/img/beverages/" + TabelBarang.get(i).getGambar() + " alt=" + TabelBarang.get(i).getNama_inventori() + " width = 150 height=300>");
-				out.println("<br/><a href='detailBarang.jsp?idBarang="+(TabelBarang.get(i).getId_inventori()-1)+"'>"+TabelBarang.get(i).getNama_inventori() + "</a><br>");
+				out.println("<br/><a href='detailBarang.jsp?idBarang="+(TabelBarang.get(i).getId_inventori())+"'>"+TabelBarang.get(i).getNama_inventori() + "</a><br>");
 				out.println("</div>");
 				j++;
 				if (j == 3) break;

@@ -34,7 +34,8 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 public class Favorit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	static final String REST_URI = "http://localhost:8080/Chintalian";
+	private static String DOMAIN = "http://127.0.0.1:8080/Chintalian";
+	//private static String DOMAIN = "http://tokokita.ap01.aws.af.cm";
     static final String GET_BARANG = "/GetBarang";
     static final String FAVORIT = "/Favorit";
 
@@ -61,7 +62,7 @@ public class Favorit extends HttpServlet {
 		try {
 			ClientConfig config = new DefaultClientConfig();
 	        Client client = Client.create(config);
-	        WebResource service = client.resource(REST_URI);
+	        WebResource service = client.resource(DOMAIN);
 	        WebResource serviceFavorit = service.path("rest").path(GET_BARANG+FAVORIT);
 			
 	     // Parsing

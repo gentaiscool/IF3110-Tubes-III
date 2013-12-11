@@ -23,7 +23,8 @@ import org.json.JSONTokener;
  */
 
 public class UpdateProfile extends HttpServlet {
-	static final String REST_URI = "http://localhost:8080/Chintalian";
+	private static String DOMAIN = "http://127.0.0.1:8080/Chintalian";
+	//private static String DOMAIN = "http://tokokita.ap01.aws.af.cm";
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -62,7 +63,7 @@ public class UpdateProfile extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		HttpClient client = new DefaultHttpClient();
-		HttpGet request2 = new HttpGet("http://127.0.0.1:8080/Chintalian/UpdateUser?nama2="+dataregister[0]+"&uname="+dataregister[2]
+		HttpGet request2 = new HttpGet(DOMAIN+"/UpdateUser?nama2="+dataregister[0]+"&uname="+dataregister[2]
 		+"&pwd2="+dataregister[3]+"&email2="+dataregister[4]+"&nohp2="+dataregister[5]+"&alamat2="+dataregister[6]
 				+"&provinsi2="+dataregister[7]+"&kota2="+dataregister[8]+"&kodepos2="+dataregister[9]);
 		HttpResponse response2 = client.execute(request2);

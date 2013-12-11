@@ -36,7 +36,7 @@ public class CheckCardValidation extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		boolean bcardnum, bname;
-		int cardnum = Integer.parseInt(request.getParameter("cardnum").toString());
+		String cardnum = request.getParameter("cardnum");
 		String user = request.getParameter("user");
 		String query, regex, names = request.getParameter("names");
 		names = names.replace('*', ' ');
@@ -47,7 +47,7 @@ public class CheckCardValidation extends HttpServlet {
 		Connection connection = dbconnector.mySqlConnection();
 		try {
 			Statement statement = connection.createStatement();
-			bcardnum = (((cardnum%1000)%123)==1 && (cardnum/10000)>0);
+			bcardnum = (cardnum.length() >= 3 && cardnum.charAt(cardnum.length()-1) == '1');
 			query = "SELECT * FROM pengguna WHERE username='"
 					+ user + "'";
 			ResultSet rs = statement.executeQuery(query);
@@ -62,7 +62,8 @@ public class CheckCardValidation extends HttpServlet {
 				}
 				String nokartu = ""+cardnum;
 				session.setAttribute("card",nokartu);
-				query = "UPDATE pengguna SET nomor_credit_card='"+cardnum+"',expired_date='"+expired+"',nama_on_card='"+names+"' WHERE username='"+ session.getAttribute("user") + "'";
+				query = "UPDATE pengguna SET nomor_credit_card='"+cardnum+"',expired_date='"+expired+"',nama_on_card='"+names+"' WHERE username='"+ user + "'";
+				System.out.println(query);
 				statement.executeUpdate(query);
 				response.getWriter().print("{"
 						+ "\"status\": 500"

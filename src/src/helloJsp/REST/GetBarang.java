@@ -32,9 +32,9 @@ public class GetBarang {
 			if (rs.next()) {
 				return "{"
 						+ "\"status\": 200"
-						+ "\"detail\": \"OK\""
+						+ ",\"detail\": \"OK\""
 						+ ",\"content\":{"
-						+ "\"id_inventori\":" + id_inventori
+						+ ",\"id_inventori\":" + id_inventori
 						+ ",\"id_kategori\":" + rs.getInt("id_kategori")
 						+ ",\"nama_inventori\":\"" + rs.getString("nama_inventori") +"\""
 						+ ",\"jumlah\":" + rs.getInt("jumlah")
@@ -46,7 +46,7 @@ public class GetBarang {
 			} else {
 				return "{"
 						+ "\"status\": 200"
-						+ "\"detail\": \"OK\""
+						+ ",\"detail\": \"OK\""
 						+ ",\"content\":\"null\""
 						+ "}";
 			}
@@ -55,7 +55,7 @@ public class GetBarang {
 		}
 		return "{"
 		+ "\"status\": 200"
-		+ "\"detail\": \"OK\""
+		+ ",\"detail\": \"OK\""
 		+ ",\"content\":\"null\""
 		+ "}";
 	}
@@ -96,7 +96,7 @@ public class GetBarang {
 		}
 		return "{"
 		+ "\"status\": 200"
-		+ "\"detail\": \"OK\""
+		+ ",\"detail\": \"OK\""
 		+ ",\"content\":\"null\""
 		+ "}";
 	}
@@ -138,7 +138,7 @@ public class GetBarang {
 		}
 		return "{"
 		+ "\"status\": 200"
-		+ "\"detail\": \"OK\""
+		+ ",\"detail\": \"OK\""
 		+ ",\"content\":\"null\""
 		+ "}";
 	}
@@ -180,7 +180,7 @@ public class GetBarang {
 		}
 		return "{"
 		+ "\"status\": 200"
-		+ "\"detail\": \"OK\""
+		+ ",\"detail\": \"OK\""
 		+ ",\"content\":\"null\""
 		+ "}";
 	}
@@ -221,7 +221,7 @@ public class GetBarang {
 		}
 		return "{"
 		+ "\"status\": 200"
-		+ "\"detail\": \"OK\""
+		+ ",\"detail\": \"OK\""
 		+ ",\"content\":\"null\""
 		+ "}";
 	}
